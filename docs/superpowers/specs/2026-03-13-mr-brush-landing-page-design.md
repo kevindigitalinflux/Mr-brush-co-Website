@@ -27,6 +27,10 @@ Rebuild the Mr Brush & Co. single-page marketing site as a premium, animated lan
 
 **Rule:** Use `font-heading` for all Poppins text and `font-body` for all Lato text. Use Tailwind token classes (e.g. `bg-charcoal`, `text-brass`) in JSX wherever possible. Exception: raw `rgba()` values are acceptable inside CSS `@keyframes` blocks and `style` prop gradients where Tailwind utilities cannot express multi-stop gradients with opacity — but never use raw hex in Tailwind class strings.
 
+**Stagger child limit:** `.stagger-children` and `.stagger-children-120` define CSS rules for `:nth-child(1)` through `:nth-child(4)` only. Do not use either class on a container with more than 4 children — additional children will remain at `opacity: 0`.
+
+**Twitter icon:** Lucide `Twitter` is confirmed available in the installed v0.460.0 (deprecated but functional — not removed). Use `Twitter` directly; no fallback needed.
+
 ---
 
 ## Architecture
@@ -355,7 +359,7 @@ Each card: `bg-charcoal border border-brass/15 rounded-xl p-6`. Icon in `bg-gree
 
 ### Mr Brush Difference
 
-Section heading: "The Mr Brush difference". Driven by `useScrollAnimation` + `.scroll-fade` on section.
+Section heading: "The Mr Brush difference". The section wrapper uses `useScrollAnimation` + `.scroll-fade`. The 4 feature points within it use `.stagger-children` (80ms) on their container div — they stagger in as the section enters. The dashboard card uses a separate `useScrollAnimation` hook instance on the card element itself (not the section wrapper), enabling independent scroll-triggered entrance of the card and its rows.
 
 **4 feature points (left column or stacked):**
 1. Zap icon — "Tech-powered automation" — "GPS check-ins, digital task lists, and automated reporting after every visit."
