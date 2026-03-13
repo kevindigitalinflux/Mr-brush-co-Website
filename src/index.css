@@ -1,0 +1,129 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Scroll utilities ─────────────────────────────────────── */
+.scroll-fade {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+.scroll-fade.animate-in { opacity: 1; transform: translateY(0); }
+
+/* 80ms stagger — max 4 children */
+.stagger-children > * {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+.stagger-children.animate-in > *:nth-child(1) { opacity:1; transform:none; transition-delay:0ms }
+.stagger-children.animate-in > *:nth-child(2) { opacity:1; transform:none; transition-delay:80ms }
+.stagger-children.animate-in > *:nth-child(3) { opacity:1; transform:none; transition-delay:160ms }
+.stagger-children.animate-in > *:nth-child(4) { opacity:1; transform:none; transition-delay:240ms }
+
+/* 120ms stagger — max 4 children */
+.stagger-children-120 > * {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+.stagger-children-120.animate-in > *:nth-child(1) { opacity:1; transform:none; transition-delay:0ms }
+.stagger-children-120.animate-in > *:nth-child(2) { opacity:1; transform:none; transition-delay:120ms }
+.stagger-children-120.animate-in > *:nth-child(3) { opacity:1; transform:none; transition-delay:240ms }
+.stagger-children-120.animate-in > *:nth-child(4) { opacity:1; transform:none; transition-delay:360ms }
+
+/* ── Hero wipe ────────────────────────────────────────────── */
+@keyframes wipeReveal {
+  0%   { clip-path: inset(0 0 0 0); }
+  100% { clip-path: inset(0 0 0 100%); }
+}
+@keyframes wipeContent {
+  0%   { clip-path: inset(0 100% 0 0); }
+  100% { clip-path: inset(0 0% 0 0); }
+}
+@keyframes squeegeeStreak {
+  0%   { left: -5%; }
+  100% { left: 105%; }
+}
+.hero-dirty-overlay {
+  animation: wipeReveal 1.5s cubic-bezier(0.4, 0, 0.2, 1) 0.1s both;
+}
+.hero-content-layer {
+  animation: wipeContent 1.5s cubic-bezier(0.4, 0, 0.2, 1) 0.1s both;
+}
+.hero-streak {
+  animation: squeegeeStreak 1.5s ease-in-out 0.1s both;
+}
+
+/* ── Post-wipe content entrance ──────────────────────────── */
+@keyframes heroFadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.hero-headline { animation: heroFadeUp 0.6s ease-out 1.7s both; }
+.hero-tagline  { animation: heroFadeUp 0.5s ease-out 1.9s both; }
+.hero-cta      { animation: heroFadeUp 0.5s ease-out 2.1s both; }
+
+/* ── Grain texture ───────────────────────────────────────── */
+.hero-grain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+/* ── Dashboard ───────────────────────────────────────────── */
+/* Live badge: glow pulse */
+@keyframes livePulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(47, 74, 61, 0); }
+  50%       { box-shadow: 0 0 8px 3px rgba(47, 74, 61, 0.6); }
+}
+.live-pulse { animation: livePulse 2s ease-in-out infinite; }
+
+/* Kitchen row shimmer */
+@keyframes rowShimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+.row-shimmer {
+  background: linear-gradient(90deg, transparent 0%, rgba(184,167,122,0.08) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: rowShimmer 3s ease-in-out infinite;
+}
+
+/* Dashboard row entrance — gated on .animate-in on the card wrapper */
+@keyframes dashRowIn {
+  from { opacity: 0; transform: translateX(-8px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+.dash-row { opacity: 0; }
+.animate-in .dash-row { animation: dashRowIn 0.4s ease-out both; }
+.animate-in .dash-row:nth-child(1) { animation-delay: 0ms; }
+.animate-in .dash-row:nth-child(2) { animation-delay: 120ms; }
+.animate-in .dash-row:nth-child(3) { animation-delay: 240ms; }
+.animate-in .dash-row:nth-child(4) { animation-delay: 360ms; }
+
+/* ── Form ────────────────────────────────────────────────── */
+@keyframes checkDraw {
+  from { stroke-dashoffset: 1; }
+  to   { stroke-dashoffset: 0; }
+}
+/* NOTE: pathLength="1" must be set as JSX attribute on <path> — not here */
+.check-draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: checkDraw 0.6s ease-out 0.2s both;
+}
+@keyframes formFadeOut {
+  from { opacity: 1; transform: scale(1); }
+  to   { opacity: 0; transform: scale(0.97); }
+}
+.form-fade-out { animation: formFadeOut 0.3s ease-out both; }
+
+@keyframes successFadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.success-fade-in { animation: successFadeIn 0.4s ease-out 0.3s both; }
