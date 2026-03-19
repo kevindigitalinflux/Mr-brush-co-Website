@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Loader2 } from 'lucide-react'
 import { useScrollAnimation } from '../hooks/useScrollAnimation'
+import { supabase } from '../lib/supabaseClient'
 
 const inputClass = `
   w-full bg-charcoal border border-ivory/20 rounded-lg px-4 py-3
@@ -11,16 +12,46 @@ const inputClass = `
 
 const labelClass = 'block font-body text-sm text-ivory/70 mb-1.5'
 
-type State = 'idle' | 'loading' | 'success'
+type State = 'idle' | 'loading' | 'success' | 'error'
 
 export default function GetAQuote() {
   const ref = useScrollAnimation<HTMLDivElement>()
   const [state, setState] = useState<State>('idle')
+  const [errorMsg, setErrorMsg] = useState('')
 
-  function handleSubmit(e: React.FormEvent) {
+  const [form, setForm] = useState({
+    name: '',
+    company: '',
+    service_type: '',
+    frequency: '',
+    email: '',
+    phone: '',
+  })
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
+    setForm(prev => ({ ...prev, [e.target.name]: e.target.value }))
+  }
+
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setState('loading')
-    setTimeout(() => setState('success'), 1200)
+    setErrorMsg('')
+
+    const { error } = await supabase.from('quote_requests').insert({
+      name: form.name,
+      email: form.email,
+      phone: form.phone || null,
+      company: form.company || null,
+      service_type: [form.service_type, form.frequency].filter(Boolean).join(' · ') || null,
+      message: null,
+    })
+
+    if (error) {
+      setErrorMsg('Something went wrong — please try again or email us directly.')
+      setState('error')
+    } else {
+      setState('success')
+    }
   }
 
   return (
@@ -43,18 +74,39 @@ export default function GetAQuote() {
 
                   <div>
                     <label className={labelClass}>Full Name</label>
-                    <input type="text" placeholder="John Smith" required className={inputClass} />
+                    <input
+                      type="text"
+                      name="name"
+                      value={form.name}
+                      onChange={handleChange}
+                      placeholder="John Smith"
+                      required
+                      className={inputClass}
+                    />
                   </div>
 
                   <div>
                     <label className={labelClass}>Company</label>
-                    <input type="text" placeholder="Acme Corp" required className={inputClass} />
+                    <input
+                      type="text"
+                      name="company"
+                      value={form.company}
+                      onChange={handleChange}
+                      placeholder="Acme Corp"
+                      className={inputClass}
+                    />
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div>
                       <label className={labelClass}>Office Size</label>
-                      <select required className={inputClass}>
+                      <select
+                        name="service_type"
+                        value={form.service_type}
+                        onChange={handleChange}
+                        required
+                        className={inputClass}
+                      >
                         <option value="">Select size…</option>
                         <option>Under 1,000 sq ft</option>
                         <option>1,000–5,000 sq ft</option>
@@ -64,7 +116,13 @@ export default function GetAQuote() {
                     </div>
                     <div>
                       <label className={labelClass}>Frequency</label>
-                      <select required className={inputClass}>
+                      <select
+                        name="frequency"
+                        value={form.frequency}
+                        onChange={handleChange}
+                        required
+                        className={inputClass}
+                      >
                         <option value="">Select frequency…</option>
                         <option>Daily</option>
                         <option>3× per week</option>
@@ -77,13 +135,32 @@ export default function GetAQuote() {
 
                   <div>
                     <label className={labelClass}>Email</label>
-                    <input type="email" placeholder="john@acme.com" required className={inputClass} />
+                    <input
+                      type="email"
+                      name="email"
+                      value={form.email}
+                      onChange={handleChange}
+                      placeholder="john@acme.com"
+                      required
+                      className={inputClass}
+                    />
                   </div>
 
                   <div>
                     <label className={labelClass}>Phone</label>
-                    <input type="tel" placeholder="+44 7700 000000" className={inputClass} />
+                    <input
+                      type="tel"
+                      name="phone"
+                      value={form.phone}
+                      onChange={handleChange}
+                      placeholder="+44 7700 000000"
+                      className={inputClass}
+                    />
                   </div>
+
+                  {state === 'error' && (
+                    <p className="font-body text-sm text-red-400 text-center">{errorMsg}</p>
+                  )}
 
                   <button
                     type="submit"
