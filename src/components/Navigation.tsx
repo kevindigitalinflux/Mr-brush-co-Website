@@ -29,9 +29,9 @@ export default function Navigation() {
       <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${
         scrolled ? 'bg-charcoal/90 backdrop-blur-md shadow-lg' : 'bg-transparent'
       }`}>
-        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-16">
+        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-20">
           <a href="#hero" aria-label="Mr Brush & Co." onClick={close}>
-            <img src={LOGO_SRC} className="h-10 w-auto" alt="Mr Brush & Co." />
+            <img src={LOGO_SRC} className="h-[60px] w-auto" alt="Mr Brush & Co." />
           </a>
 
           {/* Desktop */}

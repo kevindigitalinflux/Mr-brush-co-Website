@@ -1,4 +1,4 @@
-import { Zap, ShieldCheck, FileText, XCircle, CheckCircle2, Loader2 } from 'lucide-react'
+import { Zap, ShieldCheck, FileText, XCircle, CheckCircle2, Loader2, TrendingUp } from 'lucide-react'
 import { useScrollAnimation } from '../hooks/useScrollAnimation'
 
 const points = [
@@ -22,11 +22,16 @@ const points = [
     title: 'No lock-in contracts',
     body: 'Flexible terms that work around you. Cancel with 30 days notice.',
   },
+  {
+    icon: TrendingUp,
+    title: 'Better pay. Better pricing. Better service.',
+    body: 'By leveraging our tech background to eliminate the area manager layer, we pass the savings three ways: higher wages for our cleaners, lower prices for our clients, and investment back into our CRM and service quality.',
+  },
 ]
 
 const dashRows = [
-  { Icon: CheckCircle2, iconClass: 'text-green', label: 'Floor 3 — Cleaned',      time: '09:14 AM', action: null,       shimmer: false },
-  { Icon: CheckCircle2, iconClass: 'text-green', label: 'Reception — Cleaned',    time: '08:47 AM', action: null,       shimmer: false },
+  { Icon: CheckCircle2, iconClass: 'text-emerald-400', label: 'Floor 3 — Cleaned',      time: '09:14 AM', action: null,       shimmer: false },
+  { Icon: CheckCircle2, iconClass: 'text-emerald-400', label: 'Reception — Cleaned',    time: '08:47 AM', action: null,       shimmer: false },
   { Icon: Loader2,      iconClass: 'text-brass animate-spin', label: 'Kitchen — In Progress', time: '09:30 AM', action: null, shimmer: true },
   { Icon: FileText,     iconClass: 'text-ivory/50', label: 'Weekly Report Ready', time: '',         action: 'View →',  shimmer: false },
 ]

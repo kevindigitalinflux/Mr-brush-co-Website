@@ -35,7 +35,7 @@ export default function SpongeAnimation({ onComplete }: Props) {
     const SPONGE_W = 310
     const SPONGE_H = 105
     const ROW_H = 82
-    const SPEED = 1750 // px/s
+    const SPEED = 2190 // px/s (1.25× original)
     const WOBBLE_FREQ = 14
     const WOBBLE_AMP = 4.5
     const BRASS = '#B8A77A'

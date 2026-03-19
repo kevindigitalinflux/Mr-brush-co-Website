@@ -26,7 +26,7 @@ export default function Hero() {
       {/* Unicorn Studio WebGL background — mounted immediately so it loads during sponge animation */}
       <div className="absolute inset-0 z-0">
         <UnicornScene
-          projectId="TtUEwFbfTDX1jFxjn0by"
+          projectId="3BoR9Fa4znWkp3wRkghw"
           sdkUrl="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v2.1.4/dist/unicornStudio.umd.js"
           width="100%"
           height="100%"
@@ -43,7 +43,7 @@ export default function Hero() {
 
           <img
             src={LOGO_SRC}
-            className="h-16 md:h-20 w-auto mx-auto mb-6"
+            className="h-24 md:h-[120px] w-auto mx-auto mb-6"
             alt="Mr Brush & Co."
           />
 
