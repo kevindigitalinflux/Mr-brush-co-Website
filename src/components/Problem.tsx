@@ -19,8 +19,8 @@ const problems = [
   },
   {
     icon: Lock,
-    title: 'Rigid contracts, slow responses',
-    body: "Locked into terms that don't flex when your needs change.",
+    title: 'Overpriced and subpar services with slow responses',
+    body: "Paying premium rates for inconsistent work and a provider that takes days to respond.",
   },
 ]
 

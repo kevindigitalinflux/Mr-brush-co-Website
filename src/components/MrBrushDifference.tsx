@@ -1,11 +1,11 @@
-import { Zap, ShieldCheck, FileText, XCircle, CheckCircle2, Loader2, TrendingUp } from 'lucide-react'
+import { Zap, ShieldCheck, FileText, CheckCircle2, Loader2, TrendingUp } from 'lucide-react'
 import { useScrollAnimation } from '../hooks/useScrollAnimation'
 
 const points = [
   {
     icon: Zap,
     title: 'Tech-powered automation',
-    body: 'GPS check-ins, digital task lists, and automated reporting after every visit.',
+    body: 'GPS check-ins, digital task lists, live photo evidence of completed sections, and automated reporting after every visit.',
   },
   {
     icon: ShieldCheck,
@@ -16,11 +16,6 @@ const points = [
     icon: FileText,
     title: 'Transparent billing & reporting',
     body: 'See exactly what was done, when, and by whom. Invoices match reports.',
-  },
-  {
-    icon: XCircle,
-    title: 'No lock-in contracts',
-    body: 'Flexible terms that work around you. Cancel with 30 days notice.',
   },
   {
     icon: TrendingUp,
