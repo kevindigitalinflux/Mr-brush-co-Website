@@ -1,4 +1,4 @@
-import { Users, Smartphone, LayoutDashboard } from 'lucide-react'
+import { Users, Smartphone, LayoutDashboard, Camera } from 'lucide-react'
 import { useScrollAnimation } from '../hooks/useScrollAnimation'
 
 const steps = [
@@ -19,6 +19,12 @@ const steps = [
     icon: LayoutDashboard,
     title: 'Your dashboard, your control',
     body: 'Manage everything from your client dashboard — schedules, reports, flags, and billing in one place.',
+  },
+  {
+    number: '04',
+    icon: Camera,
+    title: 'Live evidence with pictures',
+    body: 'Photo proof of every completed section uploaded in real time — so you always know exactly what was cleaned and when.',
   },
 ]
 
