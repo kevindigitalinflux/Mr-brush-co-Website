@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import UnicornScene from 'unicornstudio-react'
 import SpongeAnimation from './SpongeAnimation'
-import { LOGO_SRC } from '../logo'
 
 export default function Hero() {
   const [animationDone, setAnimationDone] = useState(false)
@@ -42,9 +41,11 @@ export default function Hero() {
           <div className="absolute -bottom-[60px] -right-[80px] w-10 h-10 border-b border-r border-brass/35" />
 
           <img
-            src={LOGO_SRC}
+            src="/logo.png"
             className="h-24 md:h-[120px] w-auto mx-auto mb-6"
             alt="Mr Brush & Co."
+            width="480"
+            height="120"
           />
 
           <span className="block font-body text-[11px] font-normal tracking-[5px] uppercase text-brass mb-5">
