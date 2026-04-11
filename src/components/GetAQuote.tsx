@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { Loader2 } from 'lucide-react'
 import { useScrollAnimation } from '../hooks/useScrollAnimation'
-import { supabase } from '../lib/supabaseClient'
+
+const QUOTE_PROXY_URL = import.meta.env.VITE_QUOTE_PROXY_URL ?? 'https://mr-brush-quote-proxy.kevindigitalinflux.workers.dev'
 
 const inputClass = `
   w-full bg-charcoal border border-ivory/20 rounded-lg px-4 py-3
@@ -37,20 +38,32 @@ export default function GetAQuote() {
     setState('loading')
     setErrorMsg('')
 
-    const { error } = await supabase.from('quote_requests').insert({
-      name: form.name,
-      email: form.email,
-      phone: form.phone || null,
-      company: form.company || null,
-      service_type: [form.service_type, form.frequency].filter(Boolean).join(' · ') || null,
-      message: null,
-    })
+    try {
+      const res = await fetch(QUOTE_PROXY_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          phone: form.phone || null,
+          company: form.company || null,
+          service_type: [form.service_type, form.frequency].filter(Boolean).join(' · ') || null,
+          message: null,
+        }),
+      })
 
-    if (error) {
+      if (res.status === 429) {
+        setErrorMsg('Too many requests — please wait a moment and try again.')
+        setState('error')
+      } else if (!res.ok) {
+        setErrorMsg('Something went wrong — please try again or email us directly.')
+        setState('error')
+      } else {
+        setState('success')
+      }
+    } catch {
       setErrorMsg('Something went wrong — please try again or email us directly.')
       setState('error')
-    } else {
-      setState('success')
     }
   }
 
