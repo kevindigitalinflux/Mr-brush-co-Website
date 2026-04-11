@@ -82,6 +82,26 @@ body { background-color: #3d3b3a; }
   animation: sparklePop 0.9s ease-out both;
 }
 
+/* ── Section background reveal + clean veil ──────────────────── */
+/* isolation: isolate makes a stacking context; content floats above layers  */
+section[data-reveal],
+section[data-clean] {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+section[data-reveal] > :not(.reveal-layer),
+section[data-clean]  > :not(.reveal-layer) {
+  position: relative;
+  z-index: 10;
+}
+/* Clean veil — fades out via CSS transition (zero JS on-scroll cost) */
+.clean-veil {
+  transition: opacity 1.1s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: opacity;
+}
+.clean-veil.is-clean { opacity: 0; }
+
 /* ── Grain texture ───────────────────────────────────────── */
 .hero-grain::after {
   content: '';

@@ -1,4 +1,7 @@
 import Navigation from './components/Navigation'
+import CleaningProgressIndicator from './components/CleaningProgressIndicator'
+import SectionRevealEffect from './components/SectionRevealEffect'
+import SectionCleanEffect from './components/SectionCleanEffect'
 import Hero from './components/Hero'
 import Problem from './components/Problem'
 import HowItWorks from './components/HowItWorks'
@@ -13,6 +16,9 @@ export default function App() {
   return (
     <>
       <Navigation />
+      <CleaningProgressIndicator />
+      <SectionRevealEffect />
+      <SectionCleanEffect />
       <Hero />
       <Problem />
       <HowItWorks />
