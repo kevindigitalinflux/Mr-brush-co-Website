@@ -34,7 +34,7 @@ export default function Footer() {
           </div>
 
           {/* Nav */}
-          <nav className="flex flex-col gap-3">
+          <nav aria-label="Footer" className="flex flex-col gap-3">
             {navLinks.map(({ label, href }) => (
               <a key={label} href={href}
                 className="font-body text-ivory/70 hover:text-brass text-sm transition-colors duration-200">
