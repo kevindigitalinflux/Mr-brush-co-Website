@@ -69,7 +69,8 @@ const GRIME_BG = [
   'radial-gradient(ellipse 78% 72% at 50% 52%, rgba(4,10,6,0.22) 0%, transparent 100%)',
 ].join(', ')
 
-export default function SectionRevealEffect() {
+/** GSAP scroll-triggered reveal effect applied to all content sections */
+export function SectionRevealEffect() {
   useEffect(() => {
     const cleanupFns: (() => void)[] = []
 

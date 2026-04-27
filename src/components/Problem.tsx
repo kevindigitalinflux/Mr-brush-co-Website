@@ -24,7 +24,8 @@ const problems = [
   },
 ]
 
-export default function Problem() {
+/** Problem section — highlights pain points of unreliable cleaning services */
+export function Problem() {
   const ref = useScrollAnimation<HTMLDivElement>()
 
   return (

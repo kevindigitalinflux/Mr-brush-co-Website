@@ -82,7 +82,8 @@ const SECTIONS = [
 
 // ─── Component ─────────────────────────────────────────────────────────────
 
-export default function CleaningProgressIndicator() {
+/** Scroll-driven cleaning progress bar rendered via GSAP and canvas */
+export function CleaningProgressIndicator() {
   const rootRef     = useRef<HTMLDivElement>(null)
   const fillRef     = useRef<HTMLDivElement>(null)
   const dotRef      = useRef<HTMLDivElement>(null)

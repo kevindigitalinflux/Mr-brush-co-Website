@@ -82,7 +82,8 @@ const TARGETS = [
 // These only need the veil — the stacking context is already established.
 const REVEAL_SECTIONS = new Set(['#problem', '#how-it-works', '#services', '#why-us'])
 
-export default function SectionCleanEffect() {
+/** GSAP squeegee wipe effect triggered on scroll into designated sections */
+export function SectionCleanEffect() {
   useEffect(() => {
     const triggers: ReturnType<typeof ScrollTrigger.create>[] = []
 

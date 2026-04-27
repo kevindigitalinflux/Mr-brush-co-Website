@@ -8,7 +8,8 @@ const signals = [
   { icon: UserCheck,   label: 'Dedicated Supervisor'},
 ]
 
-export default function TrustSignals() {
+/** Trust Signals section — icon tiles reinforcing reliability and security */
+export function TrustSignals() {
   const ref = useScrollAnimation<HTMLDivElement>()
 
   return (

@@ -15,7 +15,8 @@ const labelClass = 'block font-body text-sm text-ivory/70 mb-1.5'
 
 type State = 'idle' | 'loading' | 'success' | 'error'
 
-export default function GetAQuote() {
+/** Quote request form — submits via Cloudflare Worker proxy to Supabase */
+export function GetAQuote() {
   const ref = useScrollAnimation<HTMLDivElement>()
   const [state, setState] = useState<State>('idle')
   const [errorMsg, setErrorMsg] = useState('')

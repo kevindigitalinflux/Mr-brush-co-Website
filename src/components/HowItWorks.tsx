@@ -28,7 +28,8 @@ const steps = [
   },
 ]
 
-export default function HowItWorks() {
+/** How It Works section — numbered steps explaining the service process */
+export function HowItWorks() {
   const ref = useScrollAnimation<HTMLDivElement>()
 
   return (

@@ -7,7 +7,8 @@ const links = [
   { label: 'Why Us',       href: '#why-us'      },
 ]
 
-export default function Navigation() {
+/** Top navigation bar with scroll transition and mobile overlay menu */
+export function Navigation() {
   const [scrolled, setScrolled]   = useState(false)
   const [menuOpen, setMenuOpen]   = useState(false)
 

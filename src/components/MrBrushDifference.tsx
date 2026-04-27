@@ -31,7 +31,8 @@ const dashRows = [
   { Icon: FileText,     iconClass: 'text-ivory/50', label: 'Weekly Report Ready', time: '',         action: 'View →',  shimmer: false },
 ]
 
-export default function MrBrushDifference() {
+/** Mr Brush Difference section — differentiators with animated dashboard preview card */
+export function MrBrushDifference() {
   const sectionRef = useScrollAnimation<HTMLDivElement>()
   const cardRef    = useScrollAnimation<HTMLDivElement>()
 

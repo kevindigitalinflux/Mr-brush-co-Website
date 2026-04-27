@@ -33,7 +33,8 @@ const PORES: [number, number, number, number][] = [
   [0.92, 0.62, 3.4, 0.2], [0.36, 0.75, 2.8, 0.9], [0.68, 0.90, 3.0, 0.5],
 ]
 
-export default function SpongeAnimation({ onComplete }: Props) {
+/** Canvas-based sponge wipe intro animation — calls onComplete when finished */
+export function SpongeAnimation({ onComplete }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const onCompleteRef = useRef(onComplete)
   onCompleteRef.current = onComplete

@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import UnicornScene from 'unicornstudio-react'
-import SpongeAnimation from './SpongeAnimation'
+import { SpongeAnimation } from './SpongeAnimation'
 
-export default function Hero() {
+/** Hero section — full-screen WebGL background with sponge wipe reveal animation */
+export function Hero() {
   const [animationDone, setAnimationDone] = useState(false)
 
   return (

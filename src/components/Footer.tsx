@@ -17,7 +17,8 @@ const socials = [
   { icon: Twitter,   label: 'Twitter'   },
 ]
 
-export default function Footer() {
+/** Site footer with logo, navigation links, and social icons */
+export function Footer() {
   return (
     <footer id="footer" className="bg-charcoal border-t border-brass/15 py-16">
       <div className="max-w-5xl mx-auto px-6 md:px-10">

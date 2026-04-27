@@ -24,7 +24,8 @@ const services = [
   },
 ]
 
-export default function Services() {
+/** Services section — icon cards listing available cleaning service types */
+export function Services() {
   const ref = useScrollAnimation<HTMLDivElement>()
 
   return (

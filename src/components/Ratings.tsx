@@ -7,7 +7,8 @@ const badges = [
   '🔄 Poor performance flagged instantly',
 ]
 
-export default function Ratings() {
+/** Ratings section — review cards and badge pills showing social proof */
+export function Ratings() {
   const ref = useScrollAnimation<HTMLDivElement>()
 
   return (
