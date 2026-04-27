@@ -3,11 +3,64 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mr Brush &amp; Co.</title>
+
+    <!-- ── Primary SEO ──────────────────────────────────────────────────────── -->
+    <title>Mr Brush &amp; Co. | Commercial Office Cleaning Services</title>
+    <meta name="description" content="Tech-powered commercial cleaning for offices and workplaces. Real-time check-ins, live photo evidence, and a client dashboard — no guesswork, no no-shows." />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://mr-brush-co.pages.dev/" />
+
+    <!-- ── Open Graph ───────────────────────────────────────────────────────── -->
+    <meta property="og:type"        content="website" />
+    <meta property="og:url"         content="https://mr-brush-co.pages.dev/" />
+    <meta property="og:title"       content="Mr Brush &amp; Co. | Commercial Office Cleaning" />
+    <meta property="og:description" content="Tech-powered commercial cleaning. GPS check-ins, live photo evidence, and a client dashboard so you always know the job was done." />
+    <meta property="og:image"       content="https://mr-brush-co.pages.dev/logo.png" />
+    <meta property="og:site_name"   content="Mr Brush &amp; Co." />
+
+    <!-- ── Twitter / X card ─────────────────────────────────────────────────── -->
+    <meta name="twitter:card"        content="summary_large_image" />
+    <meta name="twitter:title"       content="Mr Brush &amp; Co. | Commercial Office Cleaning" />
+    <meta name="twitter:description" content="Tech-powered commercial cleaning. GPS check-ins, live photo evidence, and a client dashboard." />
+    <meta name="twitter:image"       content="https://mr-brush-co.pages.dev/logo.png" />
+
+    <!-- ── Favicon + theme ──────────────────────────────────────────────────── -->
+    <link rel="icon" type="image/png" href="/logo.png" />
+    <meta name="theme-color" content="#1a2e23" />
+
+    <!-- ── Fonts — non-render-blocking ─────────────────────────────────────── -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Lato:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
-    <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Lato:ital,wght@0,400;0,700;1,400&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Lato:ital,wght@0,400;0,700;1,400&display=swap" />
+    </noscript>
+
+    <!-- ── Local Business structured data (JSON-LD) ─────────────────────────── -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Mr Brush & Co.",
+      "description": "Tech-powered commercial office cleaning services with real-time check-ins, live photo evidence, and a client dashboard.",
+      "url": "https://mr-brush-co.pages.dev",
+      "logo": "https://mr-brush-co.pages.dev/logo.png",
+      "image": "https://mr-brush-co.pages.dev/logo.png",
+      "priceRange": "££",
+      "serviceType": ["Commercial Cleaning", "Office Cleaning", "Workplace Cleaning"],
+      "areaServed": { "@type": "Country", "name": "United Kingdom" },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer service",
+        "availableLanguage": "English"
+      }
+    }
+    </script>
   </head>
   <body>
     <div id="root"></div>

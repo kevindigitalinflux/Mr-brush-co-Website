@@ -86,8 +86,9 @@ export default function GetAQuote() {
                 <div className="flex flex-col gap-5">
 
                   <div>
-                    <label className={labelClass}>Full Name</label>
+                    <label htmlFor="name" className={labelClass}>Full Name</label>
                     <input
+                      id="name"
                       type="text"
                       name="name"
                       value={form.name}
@@ -99,8 +100,9 @@ export default function GetAQuote() {
                   </div>
 
                   <div>
-                    <label className={labelClass}>Company</label>
+                    <label htmlFor="company" className={labelClass}>Company</label>
                     <input
+                      id="company"
                       type="text"
                       name="company"
                       value={form.company}
@@ -112,8 +114,9 @@ export default function GetAQuote() {
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div>
-                      <label className={labelClass}>Office Size</label>
+                      <label htmlFor="service_type" className={labelClass}>Office Size</label>
                       <select
+                        id="service_type"
                         name="service_type"
                         value={form.service_type}
                         onChange={handleChange}
@@ -128,8 +131,9 @@ export default function GetAQuote() {
                       </select>
                     </div>
                     <div>
-                      <label className={labelClass}>Frequency</label>
+                      <label htmlFor="frequency" className={labelClass}>Frequency</label>
                       <select
+                        id="frequency"
                         name="frequency"
                         value={form.frequency}
                         onChange={handleChange}
@@ -147,8 +151,9 @@ export default function GetAQuote() {
                   </div>
 
                   <div>
-                    <label className={labelClass}>Email</label>
+                    <label htmlFor="email" className={labelClass}>Email</label>
                     <input
+                      id="email"
                       type="email"
                       name="email"
                       value={form.email}
@@ -160,8 +165,9 @@ export default function GetAQuote() {
                   </div>
 
                   <div>
-                    <label className={labelClass}>Phone</label>
+                    <label htmlFor="phone" className={labelClass}>Phone</label>
                     <input
+                      id="phone"
                       type="tel"
                       name="phone"
                       value={form.phone}
@@ -195,6 +201,7 @@ export default function GetAQuote() {
           {state === 'success' && (
             <div className="success-fade-in flex flex-col items-center justify-center gap-6 py-20 text-center">
               <svg viewBox="0 0 52 52" className="w-20 h-20" fill="none"
+                aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg">
                 <circle cx="26" cy="26" r="24"
                   stroke="#2f4a3d" strokeWidth="2" fill="none" />
