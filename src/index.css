@@ -168,6 +168,22 @@ section[data-clean]  > :not(.reveal-layer) {
 }
 .success-fade-in { animation: successFadeIn 0.4s ease-out 0.3s both; }
 
+/* ── Trust signals marquee ───────────────────────────────── */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.marquee-track {
+  animation: marquee 38s linear infinite;
+  will-change: transform;
+}
+.marquee-track:hover { animation-play-state: paused; }
+.marquee-mask {
+  /* Alpha fade on both edges */
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
+  mask-image:         linear-gradient(to right, transparent 0%, black 12%, black 88%, transparent 100%);
+}
+
 /* ── Problem / Solution reveal pairs ─────────────────────── */
 /* Solution panel starts collapsed; expands when parent receives .animate-in */
 .solution-panel {
