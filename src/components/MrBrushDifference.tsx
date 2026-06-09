@@ -1,11 +1,9 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { LucideIcon } from 'lucide-react'
-import {
-  Camera, ShieldCheck, Eye, LayoutDashboard, MessageSquare,
-  FileText, Star, TrendingUp, CheckCircle2, Loader2,
-} from 'lucide-react'
+import { Camera, ShieldCheck, Eye, LayoutDashboard, MessageSquare, FileText, Star, TrendingUp } from 'lucide-react'
 import { gsap, ScrollTrigger } from '../lib/gsap'
 import { AnimatedHeading } from './AnimatedHeading'
+import { AppMockup, type ScreenKey } from './AppMockup'
 
 type Point = {
   icon: LucideIcon
@@ -58,11 +56,16 @@ const points: Point[] = [
   },
 ]
 
-const dashRows = [
-  { Icon: CheckCircle2, iconClass: 'text-emerald-400', label: 'Floor 3 — Cleaned',       time: '09:14 AM', action: null,      shimmer: false },
-  { Icon: CheckCircle2, iconClass: 'text-emerald-400', label: 'Reception — Cleaned',     time: '08:47 AM', action: null,      shimmer: false },
-  { Icon: Loader2,      iconClass: 'text-brass animate-spin', label: 'Kitchen — In Progress', time: '09:30 AM', action: null, shimmer: true  },
-  { Icon: FileText,     iconClass: 'text-ivory/50',    label: 'Weekly Report Ready',      time: '',         action: 'View →', shimmer: false },
+// Which app screen each card should reveal on the left
+const CARD_SCREENS: ScreenKey[] = [
+  'evidence',   // Photo proof after every clean
+  'overview',   // Vetted, consistent staff
+  'overview',   // Supervisor sign-off
+  'overview',   // Live dashboard
+  'complaints', // Complaints resolved
+  'history',    // Transparent billing and reporting
+  'overview',   // Your team, rated by you
+  'overview',   // Better pay, pricing, service
 ]
 
 function swapLabel(el: HTMLElement, text: string) {
@@ -75,24 +78,24 @@ function swapLabel(el: HTMLElement, text: string) {
   })
 }
 
-/** Mr Brush Difference — sticky dashboard left, scrolling portrait cards right.
- *  Heading updates as each card reaches center viewport (Sticky Content Switch). */
+/** Mr Brush Difference — sticky app mockup left, scrolling portrait cards right.
+ *  Phone screen and heading update as each card reaches center viewport. */
 export function MrBrushDifference() {
-  const cardRefs  = useRef<(HTMLDivElement | null)[]>([])
-  const labelRef  = useRef<HTMLSpanElement>(null)
-  const dashRef   = useRef<HTMLDivElement>(null)
+  const cardRefs   = useRef<(HTMLDivElement | null)[]>([])
+  const labelRef   = useRef<HTMLSpanElement>(null)
+  const mockupRef  = useRef<HTMLDivElement>(null)
+  const [activeScreen, setActiveScreen] = useState<ScreenKey>('evidence')
 
   useEffect(() => {
     const cards = cardRefs.current.filter(Boolean) as HTMLDivElement[]
     const label = labelRef.current
-    const dash  = dashRef.current
 
     const ctx = gsap.context(() => {
-      // Dashboard entrance from left
-      if (dash) {
-        gsap.from(dash, {
-          scrollTrigger: { trigger: dash, start: 'top 82%', onEnter: () => dash.classList.add('animate-in') },
-          x: -50, opacity: 0, duration: 1.2, ease: 'power4.out',
+      // Phone frame entrance
+      if (mockupRef.current) {
+        gsap.from(mockupRef.current, {
+          scrollTrigger: { trigger: mockupRef.current, start: 'top 82%' },
+          y: 50, opacity: 0, duration: 1.2, ease: 'power4.out',
         })
       }
 
@@ -104,15 +107,15 @@ export function MrBrushDifference() {
         })
       })
 
-      // Sticky Content Switch — swap label as each card reaches viewport centre
+      // Sticky Content Switch — update label AND phone screen as cards scroll into view
       if (label) {
         cards.forEach((card, i) => {
           ScrollTrigger.create({
             trigger: card,
             start: 'top center',
             end: 'bottom center',
-            onEnter:     () => swapLabel(label, points[i].title),
-            onEnterBack: () => swapLabel(label, points[i].title),
+            onEnter:     () => { swapLabel(label, points[i].title); setActiveScreen(CARD_SCREENS[i]) },
+            onEnterBack: () => { swapLabel(label, points[i].title); setActiveScreen(CARD_SCREENS[i]) },
           })
         })
       }
@@ -131,7 +134,7 @@ export function MrBrushDifference() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
 
-          {/* LEFT — sticky dashboard + live label */}
+          {/* LEFT — sticky app mockup + live label */}
           <div className="lg:sticky lg:top-24 flex flex-col gap-5">
             <div>
               <p className="font-body text-[11px] text-ivory/35 uppercase tracking-widest mb-1.5">Currently covering</p>
@@ -140,26 +143,8 @@ export function MrBrushDifference() {
               </span>
             </div>
 
-            <div ref={dashRef} className="bg-slate border border-brass/20 rounded-xl overflow-hidden">
-              <div className="flex items-center justify-between px-5 py-4 border-b border-brass/10">
-                <span className="font-body text-sm text-ivory/60">Client Dashboard Preview</span>
-                <div className="flex items-center gap-2">
-                  <span className="live-pulse w-2 h-2 rounded-full bg-green inline-block" aria-hidden="true" />
-                  <span className="font-body text-xs text-green font-semibold">Live</span>
-                </div>
-              </div>
-              <div className="divide-y divide-brass/10">
-                {dashRows.map(({ Icon, iconClass, label, time, action, shimmer }, i) => (
-                  <div key={i} className={`dash-row flex items-center gap-3 px-5 py-3.5 ${shimmer ? 'row-shimmer' : ''}`}>
-                    <Icon size={18} className={`shrink-0 ${iconClass}`} />
-                    <span className="font-body text-sm text-ivory flex-1">{label}</span>
-                    {action
-                      ? <span className="font-body text-xs text-brass cursor-pointer hover:underline">{action}</span>
-                      : <span className="font-body text-xs text-ivory/40">{time}</span>
-                    }
-                  </div>
-                ))}
-              </div>
+            <div ref={mockupRef}>
+              <AppMockup activeScreen={activeScreen} onScreenChange={setActiveScreen} />
             </div>
           </div>
 
