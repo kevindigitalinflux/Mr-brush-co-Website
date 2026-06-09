@@ -1,16 +1,42 @@
 import { useEffect, useRef } from 'react'
-import { ShieldCheck, Lock, BarChart2, UserCheck } from 'lucide-react'
+import { ShieldCheck, Lock, Camera, UserCheck, Smartphone, FileText } from 'lucide-react'
 import { gsap } from '../lib/gsap'
 import { AnimatedHeading } from './AnimatedHeading'
 
 const signals = [
-  { icon: ShieldCheck, label: 'DBS Checked Staff' },
-  { icon: Lock,        label: 'Fully Insured'      },
-  { icon: BarChart2,   label: 'Real-time Reporting' },
-  { icon: UserCheck,   label: 'Dedicated Supervisor'},
+  {
+    icon: ShieldCheck,
+    label: 'DBS Checked Staff',
+    body: 'Every cleaner is background-checked and vetted before their first shift on your site.',
+  },
+  {
+    icon: Lock,
+    label: 'Fully Insured',
+    body: 'Public liability cover in place. You are protected from day one, no exceptions.',
+  },
+  {
+    icon: Camera,
+    label: 'Photo Proof on Every Visit',
+    body: 'Timestamped, zone-by-zone photo evidence submitted after every single clean, not just on request.',
+  },
+  {
+    icon: UserCheck,
+    label: 'Dedicated Supervisor',
+    body: 'One named supervisor reviews all evidence and resolves issues before they reach you.',
+  },
+  {
+    icon: Smartphone,
+    label: 'In-House CRM App',
+    body: 'Live dashboard, complaint tracking, evidence feed, and weekly reports, all in one place built for your site.',
+  },
+  {
+    icon: FileText,
+    label: 'Transparent Monthly Billing',
+    body: 'Invoices match visit logs exactly. See what was done, when, and by whom, every time.',
+  },
 ]
 
-/** Trust Signals section — icon tiles reinforcing reliability and security */
+/** Trust Signals section — six trust tiles with supporting copy */
 export function TrustSignals() {
   const gridRef = useRef<HTMLDivElement>(null)
 
@@ -42,13 +68,16 @@ export function TrustSignals() {
           className="font-heading font-bold text-ivory text-3xl md:text-4xl text-center mb-12"
         />
 
-        <div ref={gridRef} className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {signals.map(({ icon: Icon, label }) => (
-            <div key={label} className="trust-tile flex flex-col items-center gap-4">
-              <div className="bg-green/15 rounded-full w-16 h-16 flex items-center justify-center">
-                <Icon size={26} className="text-brass" />
+        <div ref={gridRef} className="grid grid-cols-2 md:grid-cols-3 gap-6">
+          {signals.map(({ icon: Icon, label, body }) => (
+            <div key={label} className="trust-tile bg-slate border border-brass/10 rounded-2xl p-6 flex flex-col gap-4">
+              <div className="bg-green/15 rounded-xl w-12 h-12 flex items-center justify-center shrink-0">
+                <Icon size={22} className="text-brass" />
               </div>
-              <p className="font-heading font-semibold text-ivory text-sm text-center">{label}</p>
+              <div>
+                <p className="font-heading font-semibold text-ivory text-sm mb-1.5">{label}</p>
+                <p className="font-body text-ivory/55 text-sm leading-relaxed">{body}</p>
+              </div>
             </div>
           ))}
         </div>
