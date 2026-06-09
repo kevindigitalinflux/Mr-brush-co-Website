@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Loader2 } from 'lucide-react'
-import { useScrollAnimation } from '../hooks/useScrollAnimation'
+import { gsap } from '../lib/gsap'
+import { AnimatedHeading } from './AnimatedHeading'
 
 const QUOTE_PROXY_URL = import.meta.env.VITE_QUOTE_PROXY_URL ?? 'https://mr-brush-quote-proxy.kevindigitalinflux.workers.dev'
 
@@ -17,8 +18,23 @@ type State = 'idle' | 'loading' | 'success' | 'error'
 
 /** Quote request form — submits via Cloudflare Worker proxy to Supabase */
 export function GetAQuote() {
-  const ref = useScrollAnimation<HTMLDivElement>()
+  const formRef = useRef<HTMLDivElement>(null)
   const [state, setState] = useState<State>('idle')
+
+  useEffect(() => {
+    const el = formRef.current
+    if (!el) return
+    const ctx = gsap.context(() => {
+      gsap.from(el, {
+        scrollTrigger: { trigger: el, start: 'top 84%' },
+        y: 60,
+        opacity: 0,
+        duration: 1.1,
+        ease: 'power4.out',
+      })
+    })
+    return () => ctx.revert()
+  }, [])
   const [errorMsg, setErrorMsg] = useState('')
 
   const [form, setForm] = useState({
@@ -71,14 +87,15 @@ export function GetAQuote() {
   return (
     <section id="quote" className="py-24 bg-charcoal">
       <div className="max-w-2xl mx-auto px-6">
-        <h2 className="font-heading font-bold text-ivory text-3xl md:text-4xl text-center mb-3">
-          Get a quote
-        </h2>
+        <AnimatedHeading
+          text="Get a quote"
+          className="font-heading font-bold text-ivory text-3xl md:text-4xl text-center mb-3"
+        />
         <p className="font-body text-ivory/60 text-center mb-10">
           Tell us about your space and we'll get back to you within 1 business day.
         </p>
 
-        <div ref={ref} className="scroll-fade relative min-h-[480px]">
+        <div ref={formRef} className="relative min-h-[480px]">
 
           {/* Form wrapper — gets form-fade-out when loading begins (fades over 0.3s before success renders) */}
           {state !== 'success' && (

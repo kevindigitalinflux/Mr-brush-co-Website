@@ -1,5 +1,7 @@
+import { useEffect, useRef } from 'react'
 import { Building2, DoorOpen, Sparkles, Plus } from 'lucide-react'
-import { useScrollAnimation } from '../hooks/useScrollAnimation'
+import { gsap } from '../lib/gsap'
+import { AnimatedHeading } from './AnimatedHeading'
 
 const services = [
   {
@@ -26,19 +28,42 @@ const services = [
 
 /** Services section — icon cards listing available cleaning service types */
 export function Services() {
-  const ref = useScrollAnimation<HTMLDivElement>()
+  const gridRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const grid = gridRef.current
+    if (!grid) return
+
+    const cards = grid.querySelectorAll<HTMLElement>('.service-card')
+    const ctx = gsap.context(() => {
+      cards.forEach((el, i) => {
+        gsap.from(el, {
+          scrollTrigger: { trigger: el, start: 'top 86%' },
+          y: 60,
+          scale: 0.96,
+          opacity: 0,
+          duration: 1.0,
+          delay: i * 0.08,
+          ease: 'power4.out',
+        })
+      })
+    })
+
+    return () => ctx.revert()
+  }, [])
 
   return (
     <section id="services" className="py-24 bg-charcoal">
       <div className="max-w-5xl mx-auto px-6">
-        <h2 className="font-heading font-bold text-ivory text-3xl md:text-4xl text-center mb-12">
-          Our services
-        </h2>
+        <AnimatedHeading
+          text="Our services"
+          className="font-heading font-bold text-ivory text-3xl md:text-4xl text-center mb-12"
+        />
 
-        <div ref={ref} className="stagger-children grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {services.map(({ icon: Icon, title, body }) => (
             <div key={title}
-              className="bg-slate border border-brass/15 hover:border-brass/40 rounded-xl p-6 flex flex-col gap-4 transition-colors duration-200">
+              className="service-card bg-slate border border-brass/15 hover:border-brass/40 rounded-xl p-6 flex flex-col gap-4 transition-colors duration-200">
               <div className="bg-green/20 rounded-lg p-3 w-fit">
                 <Icon size={24} className="text-brass" />
               </div>

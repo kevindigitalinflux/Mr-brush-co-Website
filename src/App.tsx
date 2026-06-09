@@ -3,7 +3,7 @@ import { CleaningProgressIndicator } from './components/CleaningProgressIndicato
 import { SectionRevealEffect } from './components/SectionRevealEffect'
 import { SectionCleanEffect } from './components/SectionCleanEffect'
 import { Hero } from './components/Hero'
-import { Problem } from './components/Problem'
+import { ProblemSolution } from './components/ProblemSolution'
 import { HowItWorks } from './components/HowItWorks'
 import { Services } from './components/Services'
 import { MrBrushDifference } from './components/MrBrushDifference'
@@ -21,7 +21,7 @@ export function App() {
       <SectionRevealEffect />
       <SectionCleanEffect />
       <Hero />
-      <Problem />
+      <ProblemSolution />
       <HowItWorks />
       <Services />
       <MrBrushDifference />

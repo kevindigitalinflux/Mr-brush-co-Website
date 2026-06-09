@@ -165,3 +165,21 @@ section[data-clean]  > :not(.reveal-layer) {
   to   { opacity: 1; transform: translateY(0); }
 }
 .success-fade-in { animation: successFadeIn 0.4s ease-out 0.3s both; }
+
+/* ── Problem / Solution reveal pairs ─────────────────────── */
+/* Solution panel starts collapsed; expands when parent receives .animate-in */
+.solution-panel {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition:
+    max-height 0.65s cubic-bezier(0.4, 0, 0.2, 1) 0.28s,
+    opacity    0.45s ease-out 0.38s,
+    transform  0.45s ease-out 0.38s;
+}
+.animate-in .solution-panel {
+  max-height: 320px;
+  opacity: 1;
+  transform: translateY(0);
+}

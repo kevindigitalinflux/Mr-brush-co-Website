@@ -1,11 +1,13 @@
+import { useEffect, useRef } from 'react'
 import { Zap, ShieldCheck, FileText, CheckCircle2, Loader2, TrendingUp } from 'lucide-react'
-import { useScrollAnimation } from '../hooks/useScrollAnimation'
+import { gsap } from '../lib/gsap'
+import { AnimatedHeading } from './AnimatedHeading'
 
 const points = [
   {
     icon: Zap,
-    title: 'Tech-powered automation',
-    body: 'GPS check-ins, digital task lists, live photo evidence of completed sections, and automated reporting after every visit.',
+    title: 'Photo proof after every clean',
+    body: 'Every zone, every visit — timestamped photos reviewed by your dedicated supervisor before issues have a chance to reach you.',
   },
   {
     icon: ShieldCheck,
@@ -33,22 +35,62 @@ const dashRows = [
 
 /** Mr Brush Difference section — differentiators with animated dashboard preview card */
 export function MrBrushDifference() {
-  const sectionRef = useScrollAnimation<HTMLDivElement>()
-  const cardRef    = useScrollAnimation<HTMLDivElement>()
+  const pointsRef = useRef<HTMLDivElement>(null)
+  const cardRef   = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const pointsEl = pointsRef.current
+    const cardEl   = cardRef.current
+
+    const ctx = gsap.context(() => {
+      if (pointsEl) {
+        const items = pointsEl.querySelectorAll<HTMLElement>('.point-item')
+        items.forEach((el, i) => {
+          gsap.from(el, {
+            scrollTrigger: { trigger: el, start: 'top 85%' },
+            x: -50,
+            y: 20,
+            opacity: 0,
+            duration: 1.0,
+            delay: i * 0.1,
+            ease: 'power4.out',
+          })
+        })
+      }
+
+      if (cardEl) {
+        gsap.from(cardEl, {
+          scrollTrigger: {
+            trigger: cardEl,
+            start: 'top 82%',
+            onEnter: () => cardEl.classList.add('animate-in'),
+          },
+          scale: 0.93,
+          y: 55,
+          opacity: 0,
+          duration: 1.3,
+          ease: 'power4.out',
+        })
+      }
+    })
+
+    return () => ctx.revert()
+  }, [])
 
   return (
     <section id="why-us" className="py-24 bg-charcoal/95">
       <div className="max-w-5xl mx-auto px-6">
-        <h2 className="font-heading font-bold text-ivory text-3xl md:text-4xl text-center mb-16">
-          The Mr Brush difference
-        </h2>
+        <AnimatedHeading
+          text="The Mr Brush difference"
+          className="font-heading font-bold text-ivory text-3xl md:text-4xl text-center mb-16"
+        />
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
 
-          {/* Feature points — stagger-children handles visibility; no scroll-fade needed */}
-          <div ref={sectionRef} className="stagger-children flex flex-col gap-8">
+          {/* Feature points */}
+          <div ref={pointsRef} className="flex flex-col gap-8">
             {points.map(({ icon: Icon, title, body }) => (
-              <div key={title} className="flex gap-4 items-start">
+              <div key={title} className="point-item flex gap-4 items-start">
                 <div className="bg-green/20 rounded-lg p-2.5 shrink-0 mt-0.5">
                   <Icon size={20} className="text-brass" />
                 </div>
@@ -62,7 +104,7 @@ export function MrBrushDifference() {
 
           {/* Dashboard preview card */}
           <div ref={cardRef}
-            className="scroll-fade bg-slate border border-brass/20 rounded-xl overflow-hidden">
+            className="bg-slate border border-brass/20 rounded-xl overflow-hidden">
 
             {/* Card header */}
             <div className="flex items-center justify-between px-5 py-4 border-b border-brass/10">

@@ -1,5 +1,7 @@
+import { useEffect, useRef } from 'react'
 import { Users, Smartphone, LayoutDashboard, Camera } from 'lucide-react'
-import { useScrollAnimation } from '../hooks/useScrollAnimation'
+import { gsap } from '../lib/gsap'
+import { AnimatedHeading } from './AnimatedHeading'
 
 const steps = [
   {
@@ -10,44 +12,64 @@ const steps = [
   },
   {
     number: '02',
-    icon: Smartphone,
-    title: 'Real-time check-ins',
-    body: 'They check in and out via our app — you get real-time notifications every visit, without lifting a finger.',
+    icon: Camera,
+    title: 'Photo evidence, every visit',
+    body: 'After each zone is cleaned, your team submits timestamped photos through our app. Your supervisor reviews the evidence — before you start your day.',
   },
   {
     number: '03',
     icon: LayoutDashboard,
     title: 'Your dashboard, your control',
-    body: 'Manage everything from your client dashboard — schedules, reports, flags, and billing in one place.',
+    body: 'Live zone status, photo evidence, supervisor notes, and flagged issues — all visible in your client dashboard in real time.',
   },
   {
     number: '04',
-    icon: Camera,
-    title: 'Live evidence with pictures',
-    body: 'Photo proof of every completed section uploaded in real time — so you always know exactly what was cleaned and when.',
+    icon: Smartphone,
+    title: 'Automated weekly reports',
+    body: 'Every week, a compiled report is generated automatically — visit logs, evidence, and any flags resolved. No chasing. No calls.',
   },
 ]
 
-/** How It Works section — numbered steps explaining the service process */
+/** How It Works section — numbered steps with alternating left/right GSAP entrance */
 export function HowItWorks() {
-  const ref = useScrollAnimation<HTMLDivElement>()
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const container = containerRef.current
+    if (!container) return
+
+    const stepEls = container.querySelectorAll<HTMLElement>('.step-item')
+    const ctx = gsap.context(() => {
+      stepEls.forEach((el, i) => {
+        gsap.from(el, {
+          scrollTrigger: { trigger: el, start: 'top 83%' },
+          x: i % 2 === 0 ? 70 : -70,
+          y: 25,
+          opacity: 0,
+          duration: 1.2,
+          ease: 'power4.out',
+        })
+      })
+    })
+
+    return () => ctx.revert()
+  }, [])
 
   return (
     <section id="how-it-works" className="py-24 bg-charcoal/95">
       <div className="max-w-3xl mx-auto px-6">
-        <h2 className="font-heading font-bold text-ivory text-3xl md:text-4xl text-center mb-16">
-          How it works
-        </h2>
+        <AnimatedHeading
+          text="How it works"
+          className="font-heading font-bold text-ivory text-3xl md:text-4xl text-center mb-16"
+        />
 
-        <div ref={ref} className="stagger-children-120 flex flex-col">
+        <div ref={containerRef} className="flex flex-col">
           {steps.map(({ number, icon: Icon, title, body }, i) => (
             <div key={number}>
-              <div className="flex gap-6 items-start py-10">
-                {/* Step number */}
+              <div className="step-item flex gap-6 items-start py-10">
                 <span className="font-heading font-bold text-brass text-5xl md:text-6xl opacity-25 leading-none select-none w-16 shrink-0 text-right">
                   {number}
                 </span>
-
                 <div className="flex flex-col gap-4 flex-1">
                   <div className="bg-green/20 rounded-lg p-3 w-fit">
                     <Icon size={24} className="text-brass" />
@@ -56,10 +78,7 @@ export function HowItWorks() {
                   <p className="font-body text-ivory/70 leading-relaxed">{body}</p>
                 </div>
               </div>
-
-              {i < steps.length - 1 && (
-                <hr className="border-brass/10" />
-              )}
+              {i < steps.length - 1 && <hr className="border-brass/10" />}
             </div>
           ))}
         </div>

@@ -57,8 +57,11 @@ export function Hero() {
             <span className="block text-brass">&amp; Co.</span>
           </h1>
 
-          <p className="font-body font-light text-[clamp(14px,2vw,19px)] tracking-[0.5px] text-ivory/60 mb-9">
+          <p className="font-body font-light text-[clamp(14px,2vw,19px)] tracking-[0.5px] text-ivory/60 mb-3">
             Managed by tech. Delivered by people.
+          </p>
+          <p className="font-body text-[clamp(12px,1.4vw,15px)] text-ivory/40 tracking-[0.3px] mb-9">
+            Photo proof after every clean. Live dashboard. No chasing.
           </p>
 
           <div className="flex gap-4 justify-center flex-wrap">
