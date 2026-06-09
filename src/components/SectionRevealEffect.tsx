@@ -58,6 +58,13 @@ const REVEALS = [
       'https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1920&q=80',
     pos: 'center 45%',
   },
+  {
+    id: '#trust',
+    // Bright, spotless office lobby — the result clients are paying for
+    image:
+      'https://images.unsplash.com/photo-1497366858526-0766ad7dd0e8?auto=format&fit=crop&w=1920&q=80',
+    pos: 'center 40%',
+  },
 ]
 
 // ─── Grime gradient — simulates uneven dirt / residue ────────────────────────

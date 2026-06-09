@@ -1,4 +1,6 @@
+import { useEffect, useRef } from 'react'
 import { ShieldCheck, Lock, Camera, UserCheck, Smartphone, FileText } from 'lucide-react'
+import { gsap, ScrollTrigger } from '../lib/gsap'
 import { AnimatedHeading } from './AnimatedHeading'
 
 const signals = [
@@ -38,10 +40,30 @@ const signals = [
 // translateX(-50%) shifts by exactly 6 × 304 = 1824px → back to start.
 const loopedSignals = [...signals, ...signals]
 
-/** Trust signals — infinite marquee on deep green background with alpha edge masks */
+/** Trust signals — infinite marquee with scroll-triggered background reveal and entrance animation */
 export function TrustSignals() {
+  const carouselRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      if (carouselRef.current) {
+        gsap.from(carouselRef.current, {
+          scrollTrigger: {
+            trigger: carouselRef.current,
+            start: 'top 82%',
+          },
+          opacity: 0,
+          y: 40,
+          duration: 1.0,
+          ease: 'power3.out',
+        })
+      }
+    })
+    return () => ctx.revert()
+  }, [])
+
   return (
-    <section id="trust" className="py-24 bg-green">
+    <section id="trust" className="py-24 bg-charcoal">
       <div className="max-w-4xl mx-auto px-6 mb-14">
         <AnimatedHeading
           text="Why clients trust us"
@@ -50,7 +72,7 @@ export function TrustSignals() {
       </div>
 
       {/* Marquee track — overflow clipped, alpha mask on edges */}
-      <div className="overflow-hidden marquee-mask">
+      <div ref={carouselRef} className="overflow-hidden marquee-mask">
         <div className="flex marquee-track">
           {loopedSignals.map((signal, i) => (
             <div

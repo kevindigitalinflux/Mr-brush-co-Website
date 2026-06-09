@@ -80,7 +80,7 @@ const TARGETS = [
 
 // Sections that already have data-reveal (handled by SectionRevealEffect).
 // These only need the veil — the stacking context is already established.
-const REVEAL_SECTIONS = new Set(['#problem', '#how-it-works', '#services', '#why-us'])
+const REVEAL_SECTIONS = new Set(['#problem', '#how-it-works', '#services', '#why-us', '#trust'])
 
 /** GSAP squeegee wipe effect triggered on scroll into designated sections */
 export function SectionCleanEffect() {
