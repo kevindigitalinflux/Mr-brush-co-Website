@@ -7,7 +7,6 @@ import { ProblemSolution } from './components/ProblemSolution'
 import { HowItWorks } from './components/HowItWorks'
 import { Services } from './components/Services'
 import { MrBrushDifference } from './components/MrBrushDifference'
-import { Ratings } from './components/Ratings'
 import { TrustSignals } from './components/TrustSignals'
 import { GetAQuote } from './components/GetAQuote'
 import { Footer } from './components/Footer'
@@ -25,7 +24,6 @@ export function App() {
       <HowItWorks />
       <Services />
       <MrBrushDifference />
-      <Ratings />
       <TrustSignals />
       <GetAQuote />
       <Footer />
