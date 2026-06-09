@@ -81,13 +81,6 @@ export function Hero() {
         </div>
       </div>
 
-      {/* Scroll hint — appears after animation completes */}
-      {animationDone && (
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-pulse">
-          <span className="font-body text-[10px] tracking-[3px] uppercase text-brass/60">Scroll</span>
-          <div className="w-px h-12 bg-gradient-to-b from-transparent to-brass/60" />
-        </div>
-      )}
 
       {/* Cover strip — masks the Unicorn Studio watermark at the bottom of the canvas */}
       <div className="absolute bottom-0 left-0 right-0 h-20" style={{ background: '#2F4A3D', zIndex: 9999 }} />

@@ -45,13 +45,16 @@ export function Footer() {
           </nav>
 
           {/* Socials */}
-          <div className="flex gap-3">
-            {socials.map(({ icon: Icon, label }) => (
-              <a key={label} href="#" aria-label={label}
-                className="bg-ivory/10 rounded-full w-10 h-10 flex items-center justify-center hover:bg-brass/20 hover:text-brass transition-all duration-200 text-ivory/60">
-                <Icon size={18} />
-              </a>
-            ))}
+          <div className="flex flex-col gap-3">
+            <div className="flex gap-3">
+              {socials.map(({ icon: Icon, label }) => (
+                <a key={label} href="#" aria-label={label}
+                  className="bg-ivory/10 rounded-full w-10 h-10 flex items-center justify-center hover:bg-brass/20 hover:text-brass transition-all duration-200 text-ivory/60">
+                  <Icon size={18} />
+                </a>
+              ))}
+            </div>
+            <p className="font-body text-ivory/25 text-[10px] tracking-[2px] uppercase">Coming soon</p>
           </div>
 
         </div>

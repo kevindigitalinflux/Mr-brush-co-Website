@@ -75,7 +75,6 @@ const SECTIONS = [
   '#how-it-works',
   '#services',
   '#why-us',
-  '#ratings',
   '#trust',
   '#quote',
 ]

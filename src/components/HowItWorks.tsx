@@ -79,7 +79,7 @@ export function HowItWorks() {
 
   return (
     <section id="how-it-works" className="py-24 bg-charcoal">
-      <div className="max-w-2xl mx-auto px-6">
+      <div className="max-w-5xl mx-auto px-6">
         <AnimatedHeading
           text="How it works"
           className="font-heading font-bold text-ivory text-3xl md:text-4xl text-center mb-16"
