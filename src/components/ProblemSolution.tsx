@@ -3,8 +3,8 @@ import { gsap } from '../lib/gsap'
 import { AnimatedHeading } from './AnimatedHeading'
 
 /**
- * Reference images — replace with commissioned photography before launch.
- * Current: free-tier Unsplash via picsum.photos (seeded for consistency).
+ * Reference images — replace with commissioned pain-point photography before launch.
+ * Theme: each image should evoke the problem the ICP is experiencing, not a solution.
  */
 const pairs = [
   {
@@ -14,18 +14,19 @@ const pairs = [
     problem: 'Problems surface after the damage is done',
     body: 'By the time a client escalates, trust is already damaged.',
     colSpan: 'md:col-span-4',
-    img: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=900&q=70',
-    imgAlt: 'Modern office corridor',
+    img: '/cleaning-toilet.png',
+    imgAlt: 'Cleaner scrubbing a commercial toilet',
   },
   {
     numeric: 49,
     suffix: '%',
-    statLabel: 'fewer complaints with visible cleaning records',
+    statLabel: 'fewer complaints when cleaning records are visible',
     problem: "You're paying for a service you can't verify",
-    body: "Most clients take their provider's word for it — every single visit.",
+    body: "Most clients take their provider's word for it, every single visit.",
     colSpan: 'md:col-span-2',
-    img: 'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=600&q=70',
-    imgAlt: 'Person reviewing records on tablet',
+    // Stressed manager — full face in-frame, clearly overwhelmed, no evidence of work done
+    img: 'https://images.unsplash.com/photo-1541199249251-f713e6145474?auto=format&fit=crop&w=600&q=70',
+    imgAlt: 'Stressed building manager overwhelmed with no cleaning visibility',
   },
   {
     numeric: 58,
@@ -34,18 +35,19 @@ const pairs = [
     problem: 'Missed consumables create embarrassing failures',
     body: '51% also flag bin collection. Small misses, outsized impressions.',
     colSpan: 'md:col-span-2',
-    img: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=600&q=70',
-    imgAlt: 'Cleaning supplies',
+    img: '/overflowing-trash-bin.png',
+    imgAlt: 'Overflowing office bin with rubbish',
   },
   {
     numeric: 40,
     suffix: '%',
-    statLabel: 'of complaints avoidable with faster response',
+    statLabel: 'of complaints are avoidable with better customer-relationship management',
     problem: 'Slow responses turn small issues into lost contracts',
-    body: "It's the silence after the problem — not the problem itself — that breaks trust.",
+    body: "It's the silence after the problem, not the problem itself, that breaks trust.",
     colSpan: 'md:col-span-4',
-    img: 'https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?auto=format&fit=crop&w=900&q=70',
-    imgAlt: 'Professional meeting in office',
+    // Tired, dejected cleaner — the human cost of poor systems and communication
+    img: 'https://images.unsplash.com/photo-1628177142898-93e36e4e3a50?auto=format&fit=crop&w=900&q=70',
+    imgAlt: 'Tired cleaner, deflated by poor systems and communication',
   },
 ]
 
@@ -124,6 +126,8 @@ function PairCard({ pair, index }: { pair: Pair; index: number }) {
         />
         {/* Gradient so text below reads clearly against any image */}
         <div className="absolute inset-0 bg-gradient-to-t from-slate/80 via-slate/20 to-transparent" />
+        {/* Brand tint — unifies all reference images before commissioned photography arrives */}
+        <div className="absolute inset-0 bg-[#2F4A3D]/15" />
       </div>
 
       {/* Card body */}
