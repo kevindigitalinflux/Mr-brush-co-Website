@@ -167,7 +167,7 @@ export function ProblemSolution() {
           className="font-heading font-bold text-ivory text-3xl md:text-4xl text-center mb-4"
         />
         <p className="font-body text-ivory/50 text-sm text-center mb-14 max-w-xl mx-auto leading-relaxed">
-          These aren't edge cases — they're industry-wide problems. Here's the data.
+          These aren't edge cases, they're industry-wide problems. Here's the data.
         </p>
 
         {/* Bento grid — mirrors features-6: 6-col desktop ([4+2] and [2+4] rows), 2-col tablet, stacked mobile */}

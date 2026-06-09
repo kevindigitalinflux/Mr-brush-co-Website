@@ -8,13 +8,13 @@ const steps = [
     number: '01',
     icon: Users,
     title: 'Your dedicated team',
-    body: 'We assign a consistent, DBS-checked team to your building long-term. You get familiar faces who know your site — not a different stranger every visit.',
+    body: 'We assign a consistent, DBS-checked team to your building long-term. You get familiar faces who know your site, not a different stranger every visit.',
   },
   {
     number: '02',
     icon: Camera,
     title: 'Photo proof after every clean',
-    body: 'After each zone is completed, your team submits timestamped photo evidence through the Mr Brush app — zone by zone, every single visit.',
+    body: 'After each zone is completed, your team submits timestamped photo evidence through the Mr Brush app, zone by zone, every single visit.',
   },
   {
     number: '03',
@@ -26,19 +26,19 @@ const steps = [
     number: '04',
     icon: LayoutDashboard,
     title: 'Live dashboard, full visibility',
-    body: 'Live zone status, timestamped photo evidence, supervisor notes, and flagged issues — all visible in your client dashboard the moment each zone is completed.',
+    body: 'Live zone status, timestamped photo evidence, supervisor notes, and flagged issues, all visible in your client dashboard the moment each zone is completed.',
   },
   {
     number: '05',
     icon: FileText,
     title: 'Automated weekly reports',
-    body: 'Every week, a compiled report lands in your dashboard automatically — visit logs, photo evidence, and resolved flags. No chasing. No calls.',
+    body: 'Every week, a compiled report lands in your dashboard automatically, visit logs, photo evidence, and resolved flags. No chasing. No calls.',
   },
   {
     number: '06',
     icon: MessageSquare,
     title: 'Quick, seamless complaint resolution',
-    body: 'File a complaint straight from the Mr Brush app and watch our team address and resolve it in real time. Full transparency from receipt to resolution — no silence, no guesswork.',
+    body: 'File a complaint straight from the Mr Brush app and watch our team address and resolve it in real time. Full transparency from receipt to resolution, no silence, no guesswork.',
   },
 ]
 
