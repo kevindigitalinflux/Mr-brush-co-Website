@@ -27,7 +27,6 @@ export function Hero() {
       <div className="absolute inset-0 z-0">
         <UnicornScene
           projectId="3BoR9Fa4znWkp3wRkghw"
-          sdkUrl="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v2.1.4/dist/unicornStudio.umd.js"
           width="100%"
           height="100%"
         />
@@ -86,6 +85,9 @@ export function Hero() {
           <div className="w-px h-12 bg-gradient-to-b from-transparent to-brass/60" />
         </div>
       )}
+
+      {/* Cover strip — masks the Unicorn Studio watermark at the bottom of the canvas */}
+      <div className="absolute bottom-0 left-0 right-0 h-20" style={{ background: '#2F4A3D', zIndex: 9999 }} />
 
       {/* Sponge animation overlay — removed from DOM after completion */}
       {!animationDone && (

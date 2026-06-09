@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react'
 import { LOGO_SRC } from '../logo'
 
 const links = [
-  { label: 'Services',     href: '#services'   },
   { label: 'How It Works', href: '#how-it-works'},
+  { label: 'Services',     href: '#services'   },
   { label: 'Why Us',       href: '#why-us'      },
 ]
 
