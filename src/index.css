@@ -87,7 +87,9 @@ body { background-color: #3d3b3a; }
 section[data-reveal],
 section[data-clean] {
   position: relative;
-  overflow: hidden;
+  /* overflow: clip clips paint without creating a scroll container.
+     overflow: hidden would kill position: sticky on all children. */
+  overflow: clip;
   isolation: isolate;
 }
 section[data-reveal] > :not(.reveal-layer),
