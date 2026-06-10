@@ -3,13 +3,17 @@ import { trustSignals as signals } from '../lib/trustSignals'
 
 const CARD_W = 280
 const CARD_GAP = 16
-const CARD_STRIDE = CARD_W + CARD_GAP  // 296px per step
+const CARD_STRIDE = CARD_W + CARD_GAP   // 296px per step
+const AUTO_SPEED = 0.7                   // px/frame — ~42s per full loop at 60fps
+const SNAP_PAUSE = 900                   // ms to pause auto-play after a user swipe
+const EASE = 0.09
 
 function lerp(a: number, b: number, t: number) { return a + (b - a) * t }
 
 /**
- * Swipeable inertia carousel for trust signals — mobile only.
- * Triple-duplicates cards for seamless infinite looping; snaps to nearest card on release.
+ * Auto-scrolling swipe carousel for trust signals — mobile only.
+ * Continuously scrolls like the desktop marquee; touch swipes override then snap,
+ * then auto-play resumes.
  */
 export function MobileTrustCarousel() {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -26,6 +30,8 @@ export function MobileTrustCarousel() {
     isHorizontal: false,
   })
   const velRef = useRef({ v: 0, lastX: 0, lastTime: 0 })
+  // Timestamp until which auto-play is paused (0 = not paused)
+  const snapUntilRef = useRef(0)
 
   const cards = [...signals, ...signals, ...signals]
   const setWidth = CARD_STRIDE * signals.length  // 296 × 6 = 1776
@@ -43,17 +49,26 @@ export function MobileTrustCarousel() {
       }
 
       const s = scrollRef.current
-      s.current = lerp(s.current, s.target, 0.09)
+      const isDragging = dragRef.current.isDown
+      const isSnapping = performance.now() < snapUntilRef.current
+
+      if (!isDragging && !isSnapping) {
+        // Auto-play: advance both together so lerp stays in sync (constant speed)
+        s.target += AUTO_SPEED
+        s.current += AUTO_SPEED
+      }
+
+      // Lerp toward target — does the work during and after a swipe snap
+      s.current = lerp(s.current, s.target, EASE)
 
       // Infinite wrap — keep viewport inside the middle card set
       if (s.current >= setWidth * 1.5) { s.current -= setWidth; s.target -= setWidth }
       if (s.current < setWidth * 0.5) { s.current += setWidth; s.target += setWidth }
 
-      // Centre the first visible card in the viewport
       const padLeft = (container.offsetWidth - CARD_W) / 2
       track.style.transform = `translateX(${padLeft - s.current}px)`
 
-      // Per-card arc: cards at edges drop down and fade slightly
+      // Per-card arc: edges drop and fade slightly
       const centerX = container.offsetWidth / 2
       cardRefs.current.forEach((el, i) => {
         if (!el) return
@@ -87,7 +102,6 @@ export function MobileTrustCarousel() {
     if (!d.isDown) return
     const t = e.touches[0]
 
-    // Determine horizontal vs vertical intent on first movement > 6px
     if (!d.intentDetermined) {
       const dx = Math.abs(t.clientX - d.startX)
       const dy = Math.abs(t.clientY - d.startY)
@@ -99,7 +113,11 @@ export function MobileTrustCarousel() {
 
     const now = performance.now()
     const dt = now - velRef.current.lastTime
-    if (dt > 0 && dt < 100) velRef.current.v = (velRef.current.lastX - t.clientX) / dt
+    // Require dt > 8ms to avoid near-zero divisions producing extreme velocity
+    if (dt > 8 && dt < 100) {
+      const rawV = (velRef.current.lastX - t.clientX) / dt
+      velRef.current.v = Math.max(-4, Math.min(4, rawV))  // clamp ±4 px/ms
+    }
     velRef.current.lastX = t.clientX
     velRef.current.lastTime = now
 
@@ -111,9 +129,14 @@ export function MobileTrustCarousel() {
     if (!d.isDown) return
     d.isDown = false
     if (!d.isHorizontal) return
-    // Project velocity forward ~160ms, then snap to nearest card
-    const projected = scrollRef.current.target + velRef.current.v * 160
-    scrollRef.current.target = Math.round(projected / CARD_STRIDE) * CARD_STRIDE
+
+    const s = scrollRef.current
+    // Project momentum forward then clamp to ±2 cards — prevents erratic long jumps
+    const projected = s.target + velRef.current.v * 160
+    const baseCard = Math.round(s.target / CARD_STRIDE)
+    const clamped = Math.max((baseCard - 2) * CARD_STRIDE, Math.min((baseCard + 2) * CARD_STRIDE, projected))
+    s.target = Math.round(clamped / CARD_STRIDE) * CARD_STRIDE
+    snapUntilRef.current = performance.now() + SNAP_PAUSE
   }
 
   return (
