@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import UnicornScene from 'unicornstudio-react'
+import { HeroCanvas } from './HeroCanvas'
 import { SpongeAnimation } from './SpongeAnimation'
 
-/** Hero section — full-screen animated background with sponge wipe reveal */
+/** Hero section — dirty surface reveal: mouse wipes green layer to show clean office */
 export function Hero() {
   const [animationDone, setAnimationDone] = useState(false)
 
@@ -11,28 +11,21 @@ export function Hero() {
       id="hero"
       className="relative w-full h-screen overflow-hidden"
       style={{
-        background: 'radial-gradient(ellipse 80% 70% at 50% 55%, #2f4a3d 0%, #1a2e23 70%, #111e17 100%)',
+        background: '#2F4A3D',
       }}
     >
-      {/* Dot-grid texture */}
+      {/* Canvas reveal: office image beneath + dirty green surface on top */}
+      <HeroCanvas />
+
+      {/* Dot-grid texture — floats above canvas, adds branded grain to dirty surface */}
       <div
-        className="absolute inset-0 z-0 pointer-events-none"
+        className="absolute inset-0 pointer-events-none"
         style={{
-          backgroundImage: 'radial-gradient(circle, rgba(184,167,122,0.07) 1px, transparent 1px)',
+          backgroundImage: 'radial-gradient(circle, rgba(184,167,122,0.06) 1px, transparent 1px)',
           backgroundSize: '36px 36px',
+          zIndex: 4,
         }}
       />
-
-      {/* Unicorn Studio WebGL background */}
-      <div className="absolute inset-0 z-0">
-        <UnicornScene
-          projectId="VBLbhHpDxAjina2ge6A2"
-          width="100%"
-          height="100%"
-          scale={1}
-          dpi={1.5}
-        />
-      </div>
 
       {/* Hero content */}
       <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-6">
@@ -82,12 +75,6 @@ export function Hero() {
           </div>
         </div>
       </div>
-
-      {/* Bottom fade — smooth transition into next section */}
-      <div
-        className="absolute bottom-0 left-0 right-0 h-28 pointer-events-none"
-        style={{ background: 'linear-gradient(to bottom, transparent 0%, #2F4A3D 55%)', zIndex: 10 }}
-      />
 
       {/* Sponge animation overlay — removed from DOM after completion */}
       {!animationDone && (
