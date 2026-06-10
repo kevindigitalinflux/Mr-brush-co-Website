@@ -83,7 +83,7 @@ export function Hero() {
 
 
       {/* Cover strip — masks the Unicorn Studio watermark at the bottom of the canvas */}
-      <div className="absolute bottom-0 left-0 right-0 h-20" style={{ background: '#2F4A3D', zIndex: 9999 }} />
+      <div className="absolute bottom-0 left-0 right-0 h-28" style={{ background: 'linear-gradient(to bottom, transparent 0%, #2F4A3D 55%)', zIndex: 9999 }} />
 
       {/* Sponge animation overlay — removed from DOM after completion */}
       {!animationDone && (
