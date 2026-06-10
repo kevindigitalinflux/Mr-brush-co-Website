@@ -2,7 +2,7 @@ import { useState } from 'react'
 import UnicornScene from 'unicornstudio-react'
 import { SpongeAnimation } from './SpongeAnimation'
 
-/** Hero section — full-screen WebGL background with sponge wipe reveal animation */
+/** Hero section — full-screen animated background with sponge wipe reveal */
 export function Hero() {
   const [animationDone, setAnimationDone] = useState(false)
 
@@ -23,10 +23,11 @@ export function Hero() {
         }}
       />
 
-      {/* Unicorn Studio WebGL background — mounted immediately so it loads during sponge animation */}
+      {/* Unicorn Studio WebGL background */}
       <div className="absolute inset-0 z-0">
         <UnicornScene
           projectId="3BoR9Fa4znWkp3wRkghw"
+          production={false}
           width="100%"
           height="100%"
         />
@@ -81,9 +82,11 @@ export function Hero() {
         </div>
       </div>
 
-
-      {/* Cover strip — masks the Unicorn Studio watermark at the bottom of the canvas */}
-      <div className="absolute bottom-0 left-0 right-0 h-28" style={{ background: 'linear-gradient(to bottom, transparent 0%, #2F4A3D 55%)', zIndex: 9999 }} />
+      {/* Bottom fade — smooth transition into next section */}
+      <div
+        className="absolute bottom-0 left-0 right-0 h-28 pointer-events-none"
+        style={{ background: 'linear-gradient(to bottom, transparent 0%, #2F4A3D 55%)', zIndex: 10 }}
+      />
 
       {/* Sponge animation overlay — removed from DOM after completion */}
       {!animationDone && (
