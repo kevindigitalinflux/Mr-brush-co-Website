@@ -26,10 +26,12 @@ export function Hero() {
       {/* Unicorn Studio WebGL background */}
       <div className="absolute inset-0 z-0">
         <UnicornScene
-          projectId="3BoR9Fa4znWkp3wRkghw"
-          production={false}
+          projectId="VBLbhHpDxAjina2ge6A2"
+          sdkUrl="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v2.2.4/dist/unicornStudio.umd.js"
           width="100%"
           height="100%"
+          scale={1}
+          dpi={1.5}
         />
       </div>
 
