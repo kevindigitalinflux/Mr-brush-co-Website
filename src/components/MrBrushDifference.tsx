@@ -56,16 +56,15 @@ const points: Point[] = [
   },
 ]
 
-// Which app screen each card should reveal on the left
 const CARD_SCREENS: ScreenKey[] = [
-  'evidence',   // Photo proof after every clean
-  'overview',   // Vetted, consistent staff
+  'evidence',   // Photo proof
+  'overview',   // Vetted staff
   'overview',   // Supervisor sign-off
   'overview',   // Live dashboard
   'complaints', // Complaints resolved
-  'history',    // Transparent billing and reporting
-  'overview',   // Your team, rated by you
-  'overview',   // Better pay, pricing, service
+  'history',    // Transparent billing
+  'overview',   // Your team, rated
+  'overview',   // Better pay
 ]
 
 function swapLabel(el: HTMLElement, text: string) {
@@ -78,22 +77,22 @@ function swapLabel(el: HTMLElement, text: string) {
   })
 }
 
-/** Mr Brush Difference — sticky app mockup left, scrolling portrait cards right.
- *  Phone screen and heading update as each card reaches center viewport. */
+/** Mr Brush Difference section.
+ *  Desktop: sticky phone left, scrolling portrait cards right.
+ *  Mobile: sticky scaled phone top, compact cards below — screen switches on scroll. */
 export function MrBrushDifference() {
-  const cardRefs   = useRef<(HTMLDivElement | null)[]>([])
-  const labelRef   = useRef<HTMLSpanElement>(null)
-  const mockupRef  = useRef<HTMLDivElement>(null)
+  const cardRefs      = useRef<(HTMLDivElement | null)[]>([])
+  const labelRef      = useRef<HTMLSpanElement>(null)
+  const mobileLabelRef = useRef<HTMLSpanElement>(null)
+  const mockupRef     = useRef<HTMLDivElement>(null)
   const [activeScreen, setActiveScreen] = useState<ScreenKey>('evidence')
 
   useEffect(() => {
-    const cards = cardRefs.current.filter(Boolean) as HTMLDivElement[]
-    const label = labelRef.current
-    // offsetParent is null when the element is display:none — guards mobile hidden state
+    const cards    = cardRefs.current.filter(Boolean) as HTMLDivElement[]
     const isDesktop = mockupRef.current?.offsetParent !== null
 
     const ctx = gsap.context(() => {
-      // Phone frame entrance — desktop only (panel is hidden on mobile)
+      // Desktop phone entrance
       if (isDesktop && mockupRef.current) {
         gsap.from(mockupRef.current, {
           scrollTrigger: { trigger: mockupRef.current, start: 'top 82%' },
@@ -101,7 +100,7 @@ export function MrBrushDifference() {
         })
       }
 
-      // Portrait cards entrance — all screen sizes
+      // Card entrance animations — all screen sizes
       cards.forEach((card) => {
         gsap.from(card, {
           scrollTrigger: { trigger: card, start: 'top 86%' },
@@ -109,18 +108,26 @@ export function MrBrushDifference() {
         })
       })
 
-      // Sticky Content Switch — desktop only
-      if (isDesktop && label) {
-        cards.forEach((card, i) => {
-          ScrollTrigger.create({
-            trigger: card,
-            start: 'top center',
-            end: 'bottom center',
-            onEnter:     () => { swapLabel(label, points[i].title); setActiveScreen(CARD_SCREENS[i]) },
-            onEnterBack: () => { swapLabel(label, points[i].title); setActiveScreen(CARD_SCREENS[i]) },
-          })
+      // Screen-switch triggers — drive both the desktop sticky panel and mobile sticky phone
+      cards.forEach((card, i) => {
+        // On mobile the phone sits in a sticky top panel; trigger earlier to match the
+        // visible area below it. Desktop keeps the center-viewport trigger.
+        const start = isDesktop ? 'top center' : 'top 78%'
+        const end   = isDesktop ? 'bottom center' : 'bottom 22%'
+        ScrollTrigger.create({
+          trigger: card, start, end,
+          onEnter: () => {
+            if (labelRef.current) swapLabel(labelRef.current, points[i].title)
+            if (mobileLabelRef.current) swapLabel(mobileLabelRef.current, points[i].title)
+            setActiveScreen(CARD_SCREENS[i])
+          },
+          onEnterBack: () => {
+            if (labelRef.current) swapLabel(labelRef.current, points[i].title)
+            if (mobileLabelRef.current) swapLabel(mobileLabelRef.current, points[i].title)
+            setActiveScreen(CARD_SCREENS[i])
+          },
         })
-      }
+      })
     })
 
     return () => ctx.revert()
@@ -134,6 +141,23 @@ export function MrBrushDifference() {
           className="font-heading font-bold text-ivory text-3xl md:text-4xl text-center mb-16"
         />
 
+        {/* ── Mobile sticky phone (below lg) ─────────────────────────────── */}
+        {/* Phone scaled to 72% — visual 179×349 px, nav clears top-20 (80px) */}
+        <div className="lg:hidden sticky top-20 z-10 bg-charcoal flex flex-col items-center pt-2 pb-5 -mx-6 px-6 mb-6">
+          <div style={{ width: 179, height: 349, overflow: 'visible' }}>
+            <div style={{ transform: 'scale(0.72)', transformOrigin: 'top left' }}>
+              <AppMockup activeScreen={activeScreen} onScreenChange={setActiveScreen} />
+            </div>
+          </div>
+          <div className="text-center mt-3">
+            <p className="font-body text-[10px] text-ivory/35 uppercase tracking-widest mb-1">Currently showing</p>
+            <span ref={mobileLabelRef} className="font-heading font-semibold text-brass text-sm leading-snug block">
+              {points[0].title}
+            </span>
+          </div>
+        </div>
+
+        {/* ── Main grid ──────────────────────────────────────────────────── */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
 
           {/* LEFT — sticky app mockup + live label (desktop only) */}
@@ -144,19 +168,18 @@ export function MrBrushDifference() {
                 {points[0].title}
               </span>
             </div>
-
             <div ref={mockupRef}>
               <AppMockup activeScreen={activeScreen} onScreenChange={setActiveScreen} />
             </div>
           </div>
 
-          {/* RIGHT — portrait cards */}
+          {/* RIGHT — portrait cards (all screen sizes) */}
           <div className="flex flex-col gap-5">
             {points.map((point, i) => (
               <div
                 key={point.title}
                 ref={(el) => { cardRefs.current[i] = el }}
-                className="bg-slate border border-brass/15 rounded-2xl p-6 md:p-7 flex flex-col gap-4 min-h-[260px] md:min-h-[480px] justify-between"
+                className="bg-slate border border-brass/15 rounded-2xl p-6 md:p-7 flex flex-col gap-4 min-h-[200px] md:min-h-[480px] justify-between"
               >
                 <div className="flex flex-col gap-4">
                   <div className="bg-green/20 rounded-lg p-3 w-fit">
