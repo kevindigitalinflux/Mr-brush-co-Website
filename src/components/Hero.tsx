@@ -27,7 +27,6 @@ export function Hero() {
       <div className="absolute inset-0 z-0">
         <UnicornScene
           projectId="VBLbhHpDxAjina2ge6A2"
-          sdkUrl="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v2.2.4/dist/unicornStudio.umd.js"
           width="100%"
           height="100%"
           scale={1}
