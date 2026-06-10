@@ -95,8 +95,8 @@ export function HowItWorks() {
                 className="sticky top-24"
                 style={{ zIndex: 20 + i }}
               >
-                <div className="bg-slate border-t-2 border-t-brass/60 border-x border-b border-brass/15 rounded-2xl p-8 shadow-[0_28px_72px_rgba(0,0,0,0.6)]">
-                  <div className="flex items-start gap-6">
+                <div className="bg-slate border-t-2 border-t-brass/60 border-x border-b border-brass/15 rounded-2xl p-5 md:p-8 shadow-[0_28px_72px_rgba(0,0,0,0.6)]">
+                  <div className="flex items-start gap-4 md:gap-6">
 
                     <div className="flex flex-col items-center gap-3 shrink-0 w-14">
                       <span className="font-heading font-bold text-brass/25 text-5xl leading-none select-none tabular-nums">
@@ -122,7 +122,7 @@ export function HowItWorks() {
 
               {/* Sibling spacer — extends the shared container so the card above stays sticky */}
               {i < steps.length - 1 && (
-                <div className="h-[50vh]" aria-hidden="true" />
+                <div className="h-[36vh] md:h-[50vh]" aria-hidden="true" />
               )}
 
             </Fragment>

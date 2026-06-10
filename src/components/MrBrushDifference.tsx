@@ -89,17 +89,19 @@ export function MrBrushDifference() {
   useEffect(() => {
     const cards = cardRefs.current.filter(Boolean) as HTMLDivElement[]
     const label = labelRef.current
+    // offsetParent is null when the element is display:none — guards mobile hidden state
+    const isDesktop = mockupRef.current?.offsetParent !== null
 
     const ctx = gsap.context(() => {
-      // Phone frame entrance
-      if (mockupRef.current) {
+      // Phone frame entrance — desktop only (panel is hidden on mobile)
+      if (isDesktop && mockupRef.current) {
         gsap.from(mockupRef.current, {
           scrollTrigger: { trigger: mockupRef.current, start: 'top 82%' },
           y: 50, opacity: 0, duration: 1.2, ease: 'power4.out',
         })
       }
 
-      // Portrait cards entrance from right
+      // Portrait cards entrance — all screen sizes
       cards.forEach((card) => {
         gsap.from(card, {
           scrollTrigger: { trigger: card, start: 'top 86%' },
@@ -107,8 +109,8 @@ export function MrBrushDifference() {
         })
       })
 
-      // Sticky Content Switch — update label AND phone screen as cards scroll into view
-      if (label) {
+      // Sticky Content Switch — desktop only
+      if (isDesktop && label) {
         cards.forEach((card, i) => {
           ScrollTrigger.create({
             trigger: card,
@@ -134,8 +136,8 @@ export function MrBrushDifference() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
 
-          {/* LEFT — sticky app mockup + live label */}
-          <div className="lg:sticky lg:top-24 flex flex-col gap-5">
+          {/* LEFT — sticky app mockup + live label (desktop only) */}
+          <div className="hidden lg:flex flex-col gap-5 lg:sticky lg:top-24">
             <div>
               <p className="font-body text-[11px] text-ivory/35 uppercase tracking-widest mb-1.5">Currently covering</p>
               <span ref={labelRef} className="font-heading font-semibold text-brass text-lg leading-snug block">
@@ -154,7 +156,7 @@ export function MrBrushDifference() {
               <div
                 key={point.title}
                 ref={(el) => { cardRefs.current[i] = el }}
-                className="bg-slate border border-brass/15 rounded-2xl p-7 flex flex-col gap-4 min-h-[480px] justify-between"
+                className="bg-slate border border-brass/15 rounded-2xl p-6 md:p-7 flex flex-col gap-4 min-h-[260px] md:min-h-[480px] justify-between"
               >
                 <div className="flex flex-col gap-4">
                   <div className="bg-green/20 rounded-lg p-3 w-fit">
@@ -185,7 +187,7 @@ export function MrBrushDifference() {
                   )}
                 </div>
 
-                <span className="font-heading font-bold text-brass/10 text-8xl leading-none select-none self-end tabular-nums">
+                <span className="font-heading font-bold text-brass/10 text-6xl md:text-8xl leading-none select-none self-end tabular-nums">
                   {String(i + 1).padStart(2, '0')}
                 </span>
               </div>
