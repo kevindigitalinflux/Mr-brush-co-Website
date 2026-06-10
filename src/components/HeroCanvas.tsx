@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react'
 
 const DIRTY = '#2F4A3D'
-const BRUSH_MOUSE = 88   // base radius for mouse wipe
-const BRUSH_TOUCH = 110  // larger base radius for finger wipe
+const BRUSH_MOUSE = 88  // base radius for mouse wipe
+const BRUSH_TOUCH = 52  // smaller radius on mobile — forces real scrubbing
 const FEATHER = 0.52
 
 const CW = 80  // cursor canvas width

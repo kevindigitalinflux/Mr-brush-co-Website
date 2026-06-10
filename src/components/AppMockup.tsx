@@ -6,6 +6,9 @@ export type ScreenKey = 'overview' | 'evidence' | 'complaints' | 'history'
 export interface AppMockupProps {
   activeScreen: ScreenKey
   onScreenChange: (s: ScreenKey) => void
+  /** When true: no phone shell, no status bar, no home indicator.
+   *  Screen + nav float directly on whatever background is behind the component. */
+  frameless?: boolean
 }
 
 // ── Shared micro-components ───────────────────────────────────────────────────
@@ -286,8 +289,10 @@ const NAV_TABS: { key: ScreenKey; label: string; Icon: (p: { active: boolean }) 
 
 /** Interactive phone-frame mockup of the Mr Brush client portal.
  *  Matches the real app's nav, colours, and screen layouts exactly.
- *  Screens switch via scroll (parent-controlled) or tap on the bottom nav. */
-export function AppMockup({ activeScreen, onScreenChange }: AppMockupProps) {
+ *  Screens switch via scroll (parent-controlled) or tap on the bottom nav.
+ *  Pass frameless={true} to strip the phone shell, status bar, and home indicator
+ *  so the screen floats directly on the parent background. */
+export function AppMockup({ activeScreen, onScreenChange, frameless = false }: AppMockupProps) {
   const screenRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -299,24 +304,68 @@ export function AppMockup({ activeScreen, onScreenChange }: AppMockupProps) {
     return () => ctx.revert()
   }, [activeScreen])
 
+  const screenArea = (
+    <div className="h-[370px] overflow-hidden shrink-0 bg-[#F5F4EF]">
+      <div ref={screenRef} className="h-full">
+        {activeScreen === 'overview'   && <OverviewScreen />}
+        {activeScreen === 'evidence'   && <EvidenceScreen />}
+        {activeScreen === 'complaints' && <ComplaintsScreen />}
+        {activeScreen === 'history'    && <HistoryScreen />}
+      </div>
+    </div>
+  )
+
+  const navBar = (
+    <div className="bg-white border-t border-[#E3E3DD] flex items-center justify-around shrink-0" style={{ height: '56px' }}>
+      {NAV_TABS.map(({ key, label, Icon }) => {
+        const isActive = activeScreen === key
+        return (
+          <button
+            key={key}
+            onClick={() => onScreenChange(key)}
+            aria-label={label}
+            className="flex flex-col items-center gap-0.5 flex-1 py-1.5"
+          >
+            <div className={`w-9 h-6 rounded-full flex items-center justify-center transition-colors duration-150 ${isActive ? 'bg-[#B8A77A]' : 'bg-transparent'}`}>
+              <Icon active={isActive} />
+            </div>
+            <span className={`text-[8.5px] tracking-[0.2px] font-body ${isActive ? 'text-[#B8A77A] font-bold' : 'text-[#434B4D]'}`}>
+              {label}
+            </span>
+          </button>
+        )
+      })}
+    </div>
+  )
+
+  // ── Frameless variant: screen + nav only, no phone chrome ──────────────────
+  if (frameless) {
+    return (
+      <div className="w-[248px] mx-auto select-none">
+        <div className="rounded-[28px] overflow-hidden flex flex-col">
+          {screenArea}
+          {navBar}
+        </div>
+      </div>
+    )
+  }
+
+  // ── Full phone variant ─────────────────────────────────────────────────────
   return (
     <div className="w-[248px] mx-auto select-none">
-      {/* Phone shell */}
-      <div className="bg-[#111110] rounded-[40px] p-[5px] shadow-[0_48px_120px_rgba(0,0,0,0.75)] border border-white/[0.05]">
+      <div className="bg-transparent rounded-[40px] p-[5px] shadow-[0_16px_48px_rgba(0,0,0,0.35)] border border-white/[0.09]">
         <div className="rounded-[36px] overflow-hidden bg-[#F5F4EF] flex flex-col">
 
           {/* Status bar */}
           <div className="flex items-center justify-between px-5 pt-3 pb-1.5 bg-[#F5F4EF] shrink-0">
             <span className="font-heading font-bold text-[11px] text-[#3D3B3A]">9:41</span>
             <div className="flex items-center gap-1.5">
-              {/* Signal bars */}
               <svg width="15" height="11" viewBox="0 0 15 11" fill="none" aria-hidden="true">
                 <rect x="0" y="7" width="3" height="4" rx="0.5" fill="#3D3B3A" />
                 <rect x="4" y="4.5" width="3" height="6.5" rx="0.5" fill="#3D3B3A" />
                 <rect x="8" y="2" width="3" height="9" rx="0.5" fill="#3D3B3A" />
                 <rect x="12" y="0" width="3" height="11" rx="0.5" fill="#3D3B3A" opacity="0.3" />
               </svg>
-              {/* Battery */}
               <svg width="19" height="11" viewBox="0 0 19 11" fill="none" aria-hidden="true">
                 <rect x="0.5" y="0.5" width="16" height="10" rx="2.5" stroke="#3D3B3A" strokeOpacity="0.35" />
                 <rect x="2" y="2" width="12" height="7" rx="1.5" fill="#3D3B3A" />
@@ -325,37 +374,8 @@ export function AppMockup({ activeScreen, onScreenChange }: AppMockupProps) {
             </div>
           </div>
 
-          {/* Screen area */}
-          <div className="h-[370px] overflow-hidden shrink-0">
-            <div ref={screenRef} className="h-full">
-              {activeScreen === 'overview'   && <OverviewScreen />}
-              {activeScreen === 'evidence'   && <EvidenceScreen />}
-              {activeScreen === 'complaints' && <ComplaintsScreen />}
-              {activeScreen === 'history'    && <HistoryScreen />}
-            </div>
-          </div>
-
-          {/* Bottom nav — exact match to ClientNav.tsx */}
-          <div className="bg-white border-t border-[#E3E3DD] flex items-center justify-around shrink-0" style={{ height: '56px' }}>
-            {NAV_TABS.map(({ key, label, Icon }) => {
-              const isActive = activeScreen === key
-              return (
-                <button
-                  key={key}
-                  onClick={() => onScreenChange(key)}
-                  aria-label={label}
-                  className="flex flex-col items-center gap-0.5 flex-1 py-1.5"
-                >
-                  <div className={`w-9 h-6 rounded-full flex items-center justify-center transition-colors duration-150 ${isActive ? 'bg-[#B8A77A]' : 'bg-transparent'}`}>
-                    <Icon active={isActive} />
-                  </div>
-                  <span className={`text-[8.5px] tracking-[0.2px] font-body ${isActive ? 'text-[#B8A77A] font-bold' : 'text-[#434B4D]'}`}>
-                    {label}
-                  </span>
-                </button>
-              )
-            })}
-          </div>
+          {screenArea}
+          {navBar}
 
           {/* iOS home indicator */}
           <div className="bg-white pb-2.5 flex justify-center pt-1 shrink-0">
