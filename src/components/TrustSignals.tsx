@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { ShieldCheck, Lock, Camera, UserCheck, Smartphone, FileText } from 'lucide-react'
-import { gsap, ScrollTrigger } from '../lib/gsap'
+import { gsap } from '../lib/gsap'
 import { AnimatedHeading } from './AnimatedHeading'
 
 const signals = [
