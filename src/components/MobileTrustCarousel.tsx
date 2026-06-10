@@ -61,9 +61,16 @@ export function MobileTrustCarousel() {
       // Lerp toward target — does the work during and after a swipe snap
       s.current = lerp(s.current, s.target, EASE)
 
-      // Infinite wrap — keep viewport inside the middle card set
-      if (s.current >= setWidth * 1.5) { s.current -= setWidth; s.target -= setWidth }
-      if (s.current < setWidth * 0.5) { s.current += setWidth; s.target += setWidth }
+      // Infinite wrap — keep viewport inside the middle card set.
+      // Also adjust startScroll so an in-progress drag stays consistent after a wrap.
+      if (s.current >= setWidth * 1.5) {
+        s.current -= setWidth; s.target -= setWidth
+        dragRef.current.startScroll -= setWidth
+      }
+      if (s.current < setWidth * 0.5) {
+        s.current += setWidth; s.target += setWidth
+        dragRef.current.startScroll += setWidth
+      }
 
       const padLeft = (container.offsetWidth - CARD_W) / 2
       track.style.transform = `translateX(${padLeft - s.current}px)`
@@ -91,7 +98,7 @@ export function MobileTrustCarousel() {
     d.isDown = true
     d.startX = t.clientX
     d.startY = t.clientY
-    d.startScroll = scrollRef.current.target
+    d.startScroll = scrollRef.current.current  // use displayed position, not ahead-running target
     d.intentDetermined = false
     d.isHorizontal = false
     velRef.current = { v: 0, lastX: t.clientX, lastTime: performance.now() }
