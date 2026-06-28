@@ -64,12 +64,17 @@ export function Footer() {
           <p className="font-body text-ivory/30 text-xs">
             © {new Date().getFullYear()} Mr Brush & Co. All rights reserved.
           </p>
-          <div className="flex gap-4">
+          <div className="flex gap-4 items-center">
             <a href="#" className="font-body text-ivory/30 hover:text-ivory/60 text-xs transition-colors duration-200">
               Privacy Policy
             </a>
             <a href="#" className="font-body text-ivory/30 hover:text-ivory/60 text-xs transition-colors duration-200">
               Terms of Service
+            </a>
+            <span className="text-ivory/15 text-xs">|</span>
+            <a href="https://didreamlabs.com" target="_blank" rel="noopener noreferrer"
+              className="font-body text-ivory/30 hover:text-brass text-xs transition-colors duration-200">
+              Built by DI Dreamlabs
             </a>
           </div>
         </div>
