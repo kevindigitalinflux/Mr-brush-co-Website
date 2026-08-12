@@ -45,6 +45,7 @@ export function GetAQuote() {
     email: '',
     phone: '',
   })
+  const [consent, setConsent] = useState(false)
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }))
@@ -193,6 +194,21 @@ export function GetAQuote() {
                       placeholder="+44 7700 000000"
                       className={inputClass}
                     />
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <input
+                      id="consent"
+                      type="checkbox"
+                      checked={consent}
+                      onChange={e => setConsent(e.target.checked)}
+                      required
+                      className="mt-1 h-4 w-4 shrink-0 accent-brass"
+                    />
+                    <label htmlFor="consent" className="font-body text-xs text-ivory/60 leading-relaxed">
+                      I agree to be contacted about this enquiry and for the details above to be
+                      stored for that purpose. We don't share your information with third parties.
+                    </label>
                   </div>
 
                   {state === 'error' && (
