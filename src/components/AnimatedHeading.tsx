@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { Fragment, useEffect, useRef } from 'react'
 import { gsap } from '../lib/gsap'
 
 interface Props {
@@ -35,10 +35,15 @@ export function AnimatedHeading({ text, className = '', as: Tag = 'h2', delay = 
 
   return (
     <Tag ref={ref} className={className}>
-      {text.split(' ').map((word, i) => (
-        <span key={i} className="overflow-hidden inline-block align-top mr-[0.3em] last:mr-0">
-          <span className="word-inner inline-block">{word}</span>
-        </span>
+      {text.split(' ').map((word, i, words) => (
+        <Fragment key={i}>
+          <span className="overflow-hidden inline-block align-top mr-[0.3em] last:mr-0">
+            <span className="word-inner inline-block">{word}</span>
+          </span>
+          {/* Real space character for screen readers / text-extracting crawlers —
+              the visual gap above comes from CSS margin, not this. */}
+          {i < words.length - 1 && <span className="sr-only"> </span>}
+        </Fragment>
       ))}
     </Tag>
   )

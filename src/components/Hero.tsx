@@ -48,7 +48,7 @@ export function Hero() {
           </span>
 
           <h1 className="font-heading font-extrabold text-[clamp(56px,10vw,108px)] leading-[0.92] tracking-[-3px] text-ivory mb-6">
-            Mr Brush
+            Mr Brush{' '}
             <span className="block text-brass">&amp; Co.</span>
           </h1>
 
