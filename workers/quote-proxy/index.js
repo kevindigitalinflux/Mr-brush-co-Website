@@ -121,7 +121,8 @@ function isValidEmail(email) {
 function corsHeaders(request) {
   const origin = request.headers.get('Origin') || ''
   const allowed = [
-    'https://mr-brush-co.pages.dev',
+    'https://mrbrushandco.co.uk',
+    'https://www.mrbrushandco.co.uk',
     'http://localhost:5173',
     'http://localhost:4173',
   ]
