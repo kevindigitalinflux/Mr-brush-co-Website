@@ -1,5 +1,6 @@
-import { Linkedin, Instagram, Twitter } from 'lucide-react'
+import { Linkedin, Instagram, Twitter, Phone, MessageCircle } from 'lucide-react'
 import { LOGO_SRC } from '../logo'
+import { WHATSAPP_URL, PHONE_DISPLAY, PHONE_HREF } from '../lib/contact'
 
 // Note: Twitter is deprecated in Lucide but remains available in v0.460.0.
 // If a future Lucide upgrade removes it, replace with ExternalLink.
@@ -43,6 +44,20 @@ export function Footer() {
               </a>
             ))}
           </nav>
+
+          {/* Contact */}
+          <div className="flex flex-col gap-3">
+            <a href={PHONE_HREF}
+              className="flex items-center gap-2 font-body text-ivory/70 hover:text-brass text-sm transition-colors duration-200">
+              <Phone size={16} />
+              {PHONE_DISPLAY}
+            </a>
+            <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer"
+              className="flex items-center gap-2 font-body text-ivory/70 hover:text-brass text-sm transition-colors duration-200">
+              <MessageCircle size={16} />
+              WhatsApp us
+            </a>
+          </div>
 
           {/* Socials */}
           <div className="flex flex-col gap-3">

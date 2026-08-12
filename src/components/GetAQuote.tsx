@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
-import { Loader2 } from 'lucide-react'
+import { Loader2, MessageCircle } from 'lucide-react'
 import { gsap } from '../lib/gsap'
 import { AnimatedHeading } from './AnimatedHeading'
+import { WHATSAPP_URL } from '../lib/contact'
 
 const QUOTE_PROXY_URL = import.meta.env.VITE_QUOTE_PROXY_URL ?? 'https://mr-brush-quote-proxy.kevindigitalinflux.workers.dev'
 
@@ -92,9 +93,16 @@ export function GetAQuote() {
           text="Get a quote"
           className="font-heading font-bold text-ivory text-3xl md:text-4xl text-center mb-3"
         />
-        <p className="font-body text-ivory/60 text-center mb-10">
+        <p className="font-body text-ivory/60 text-center mb-4">
           Tell us about your space and we'll get back to you within 1 business day.
         </p>
+        <div className="flex justify-center mb-10">
+          <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer"
+            className="flex items-center gap-2 font-body text-sm text-brass hover:brightness-110 transition-all duration-200">
+            <MessageCircle size={16} />
+            Prefer WhatsApp? Message us directly
+          </a>
+        </div>
 
         <div ref={formRef} className="relative min-h-[480px]">
 
