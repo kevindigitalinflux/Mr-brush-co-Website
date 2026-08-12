@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://mr-brush-co.pages.dev/sitemap.xml
+Sitemap: https://mrbrushandco.co.uk/sitemap.xml
