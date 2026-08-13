@@ -29,7 +29,7 @@ export function Footer() {
 
           {/* Brand */}
           <div className="flex flex-col gap-3">
-            <img src={LOGO_SRC} className="h-[60px] w-auto object-contain" alt="Mr Brush & Co." />
+            <img src={LOGO_SRC} className="h-[120px] w-auto object-contain" alt="Mr Brush & Co." />
             <p className="font-body text-ivory/50 text-sm">
               Managed by tech. Delivered by people.
             </p>

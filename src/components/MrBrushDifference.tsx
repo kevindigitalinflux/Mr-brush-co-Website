@@ -126,7 +126,7 @@ export function MrBrushDifference() {
       if (!section || !track) return
 
       // Fill the viewport below the nav bar
-      const navH = 80
+      const navH = 110
       section.style.height = `${window.innerHeight - navH}px`
 
       // Measure after layout has settled
