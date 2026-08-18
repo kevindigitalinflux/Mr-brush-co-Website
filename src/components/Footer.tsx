@@ -1,9 +1,6 @@
-import { Linkedin, Instagram, Twitter, Phone, MessageCircle } from 'lucide-react'
+import { Linkedin, Instagram, Facebook, Phone, MessageCircle } from 'lucide-react'
 import { LOGO_SRC } from '../logo'
 import { WHATSAPP_URL, PHONE_DISPLAY, PHONE_HREF } from '../lib/contact'
-
-// Note: Twitter is deprecated in Lucide but remains available in v0.460.0.
-// If a future Lucide upgrade removes it, replace with ExternalLink.
 
 const navLinks = [
   { label: 'Services',     href: '#services'    },
@@ -13,9 +10,9 @@ const navLinks = [
 ]
 
 const socials = [
-  { icon: Linkedin,  label: 'LinkedIn'  },
-  { icon: Instagram, label: 'Instagram' },
-  { icon: Twitter,   label: 'Twitter'   },
+  { icon: Facebook,  label: 'Facebook',  href: 'https://www.facebook.com/profile.php?id=61593568914509' },
+  { icon: Instagram, label: 'Instagram', href: 'https://www.instagram.com/mrbrushandco/' },
+  { icon: Linkedin,  label: 'LinkedIn',  href: 'https://www.linkedin.com/company/mr-brush-co/' },
 ]
 
 /** Site footer with logo, navigation links, and social icons */
@@ -62,14 +59,13 @@ export function Footer() {
           {/* Socials */}
           <div className="flex flex-col gap-3">
             <div className="flex gap-3">
-              {socials.map(({ icon: Icon, label }) => (
-                <a key={label} href="#" aria-label={label}
+              {socials.map(({ icon: Icon, label, href }) => (
+                <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label}
                   className="bg-ivory/10 rounded-full w-10 h-10 flex items-center justify-center hover:bg-brass/20 hover:text-brass transition-all duration-200 text-ivory/60">
                   <Icon size={18} />
                 </a>
               ))}
             </div>
-            <p className="font-body text-ivory/25 text-[10px] tracking-[2px] uppercase">Coming soon</p>
           </div>
 
         </div>
